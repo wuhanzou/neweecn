@@ -1,0 +1,67 @@
+﻿分类
+配置 分为针对模块的配置和针对项目的配置，针对模块的配置定义在模块目录下的config.php文件。而针对项目的配置在后台通过配置管理进行配置。
+配置生效的优先级：如果不同类型的配置有重复，项目配置优先级最高，其次是普通模块配置，最后是Common模块的配置。
+实际上，在二次开发过程中，需要新增的配置都可以在后台的”配置管理“进行配置。尽量不修改文件配置。除非配置复杂不得不写到配置文件中(例如多维数组配置)
+Common模块配置
+位于/Application/Common/Conf/config.php里。用来设置全局生效的配置。
+配置名 说明  当前值
+AUTOLOAD_NAMESPACE  插件根目录路径 array('Addons' => ONETHINK_ADDON_PATH)
+DEFAULT_MODULE  默认模块  Home
+MODULE_DENY_LIST  禁止通过URL访问的模块  array('Common', 'User')
+DATA_AUTH_KEY 默认数据加密KEY 安装时生成，每次安装时不一样的。不可随意修改
+USER_MAX_CACHE  最大缓存用户信息数 1000
+USER_ADMINISTRATOR  超级管理员用户ID 1
+URL_CASE_INSENSITIVE  不区分url大小写 true
+URL_MODEL url模式 3
+VAR_URL_PARAMS  PATHINFO URL参数变量  ''
+URL_PATHINFO_DEPR PATHINFO URL分割符 /
+DEFAULT_FILTER  全局过滤函数  ''
+DOCUMENT_MODEL_TYPE 文档模型配置 (文档模型核心配置，请勿更改)  array(2 => '主题', 1 => '目录', 3 => '段落')
+TMPL_EXCEPTION_FILE 异常页面的模板文件 MODULE_PATH.'View/Public/success.html
+Home模块配置
+位于/Application/Home/Conf/config.php里。用来设置只针对Home模块的配置
+配置名 说明  当前值
+TAGLIB_PRE_LOAD 预加载标签库的命名空间 OT\TagLib\Article,OT\TagLib\Think
+DEFAULT_THEME 默认主题  default
+DATA_CACHE_PREFIX 缓存前置  onethink_
+DATA_CACHE_TYPE 数据缓存类型  File
+DOWNLOAD_UPLOAD 下载模型相关配置  数组，配置了前台文件上传的类型、大小、路径、命名方式等。详见配置文件
+EDITOR_UPLOAD 编辑器上传配置 数组，配置了前台编辑器插件文件上传的类型、大小、路径、命名方式等。详见配置文件
+TMPL_PARSE_STRING 模板解析常量  __STATIC__、__ADDONS__、__IMG__、__CSS__、__JS__
+SESSION_PREFIX  session前缀 onethink_home
+COOKIE_PREFIX cookie前缀  onethink_home_
+ATTACHMENT_DEFAULT  附件默认配置  数组，配置了附件插件的驱动和驱动配置，详见配置文件
+ATTACHMENT_UPLOAD 附件上传配置  数组，配置了前台使用附件插件时文件上传的类型、大小、路径、命名方式等。详见配置文件
+Admin模块配置
+位于/Application/Admin/Conf/config.php里。用来设置只针对Admin模块的配置
+配置名 说明  当前值
+DATA_CACHE_PREFIX 缓存前置  onethink_
+DATA_CACHE_TYPE 数据缓存类型  File
+DOWNLOAD_UPLOAD 后台下载模型相关配置  数组，配置了后台文件上传的类型、大小、路径、命名方式等。详见配置文件
+PICTRUE_UPLOAD  后台图片上传模型相关配置  数组，配置了后台图片上传的类型、大小、路径、命名方式等。详见配置文件
+PICTURE_UPLOAD_DRIVER 图片上传驱动  local
+UPLOAD_LOCAL_CONFIG 本地上传驱动配置  见配置文件
+EDITOR_UPLOAD 后台编辑器上传配置 数组，配置了后台编辑器插件文件上传的类型、大小、路径、命名方式等。详见配置文件
+TMPL_PARSE_STRING 模板解析常量  STATIC、ADDONS、IMG、CSS、JS （这里被tp模板转义了，左右都带__）
+SESSION_PREFIX  session前缀 onethink_admin
+COOKIE_PREFIX cookie前缀  onethink_admin_
+VAR_SESSION_ID  session_id  修复uploadify传递的session_id变量
+TMPL_ACTION_ERROR 默认错误跳转对应的模板文件 MODULE_PATH.'View/Public/error.html'
+TMPL_ACTION_SUCCESS 默认成功跳转对应的模板文件 MODULE_PATH.'View/Public/success.html
+TMPL_EXCEPTION_FILE 异常页面的模板文件 MODULE_PATH.'View/Public/exception.html
+OT项目配置
+这里指说下配置的特别字段说明，具体的看装好的ot后台“配置管理列表”
+由于数据库里只能存字符串，不能存php源码格式，我们做了一些常用配置的解析，通过配置类型和配置值、配置项组合实现配置文件中的各种配置。
+配置类型  目标值 例子
+数字  1234  配置类型选数字，配置值里直接写1234
+字符  'onethink'  配置值里写onethink
+长文本 'asd带换行'  配置值里写带换行的文本
+数组  array('a'=>1,'b'=>2)  配置值里写a:1换行b:2
+枚举  array('a'=>1,'b'=>2)  配置项里写a:1换行b:2，配置值里写选中的键名a或b
+项目配置比较多，这里仅列出几项比较重要的与二次开发有关的项目配置：
+配置名 说明  当前值
+ALLOW_VISIT 配置后台不需要进行权限控制的节点  见配置
+DENY_VISIT  配置后台只允许超级管理员访问的节点 见配置
+SHOW_PAGE_TRACE 为了方便地开发，Trace开关配置移到了项目配置  true
+CONFIG_GROUP_LIST 项目配置分组  默认已经分为了：基本，用户，内容，系统四个分组。
+AUTH_CONFIG Auth.class.php配置  除非您了解修改该配置对OT的Auth.class.php的影响，否则不要修改。

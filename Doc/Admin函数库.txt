@@ -1,0 +1,161 @@
+﻿Admin应用公共函数
+位于 /Application/Admin/Common/function.php 中，供后台调用，如果需要，您可以搜索后台调用的位置了解具体作用．
+get_list_field($data, $grid,$model)
+说明：解析列表定义规则
+get_model_by_id($id)
+说明：根据模型id获取模型名称
+get_attribute_type($type='')
+说明：获取模型字段属性类型信息
+get_status_title($status = null)
+说明：获取对应状态的文字信息
+参数 int $status
+返回值 string 状态文字 ，false 未获取到
+源码：
+function get_status_title($status = null){
+    if(!isset($status)){
+        return false;
+    }
+    switch ($status){
+        case -1 : return    '已删除';   break;
+        case 0  : return    '禁用';     break;
+        case 1  : return    '正常';     break;
+        case 2  : return    '待审核';   break;
+        default : return    false;      break;
+    }
+}
+show_status_op($status)
+说明：获取数据状态对应的操作文字
+源码：
+function show_status_op($status) {
+    switch ($status){
+        case 0  : return    '启用';     break;
+        case 1  : return    '禁用';     break;
+        case 2  : return    '审核';       break;
+        default : return    false;      break;
+    }
+}
+get_document_type($type = null)
+说明：获取文档的类型文字
+参数 string $type
+返回值 string 状态文字 ，false 未获取到
+源码
+function get_document_type($type = null){
+    if(!isset($type)){
+        return false;
+    }
+    switch ($type){
+        case 1  : return    '目录'; break;
+        case 2  : return    '主题'; break;
+        case 3  : return    '段落'; break;
+        default : return    false;  break;
+    }
+}
+get_config_type($type=0)
+说明：
+获取配置的类型
+参数 string $type 配置类型
+返回值 string
+源码：
+function get_config_type($type=0){
+    $list = C('CONFIG_TYPE_LIST');
+    return $list[$type];
+}
+get_config_group($group=0)
+说明：
+获取配置的分组
+参数 string $group 配置分组
+返回值 string
+源码：
+function get_config_group($group=0){
+    $list = C('CONFIG_GROUP_LIST');
+    return $list[$group];
+}
+int_to_string(&$data,$map=array('status'=>array(1=>'正常',-1=>'删除',0=>'禁用',2=>'未审核',3=>'草稿')))
+说明：　对select返回的数组进行整数映射转换，默认转换 status 字段，转换结果使用status_text保存．
+参数 array $map 字段值与转换后的文字的映射关系
+array(
+ '字段名1'=>array(值与文字映射关系数组),
+ '字段名2'=>array(值与文字映射关系数组),
+ ......
+)
+返回值 array　示例：
+array(
+   array('id'=>1,'title'=>'标题','status'=>'1','status_text'=>'正常')
+   array('id'=>２,'title'=>'标题','status'=>'0','status_text'=>'禁用')
+   ......
+)
+extra_menu($extra_menu,&$base_menu)
+说明：动态扩展左侧菜单,调用位置：View/Public/base.html
+get_parent_category($cid)
+说明：获取参数的所有父级分类
+参数 int $cid 分类id
+返回值 array 参数分类和父类的信息集合
+check_verify($code, $id = 1)
+说明：检测验证码是否正确
+参数 integer $code 验证码
+返回值 boolean 检测结果
+get_type_bycate($id = null)
+说明：获取分类绑定的文档类型
+参数 int $id
+返回值 array 文档绑定的文档类型数组
+get_cate($cate_id = null)
+说明：根据分类id获取分类的title
+参数 int $cate_id
+parse_config_attr($string)
+说明：解析枚举类型配置值 格式 a:名称1,b:名称2
+返回：解析后的枚举配置数组
+get_subdocument_count($id=0)
+说明：获取文档的子文档统计数
+get_action($id = null, $field = null)
+说明：
+获取行为数据
+参数 string $id 行为id
+参数 string $field 需要获取的字段
+源码：
+function get_action($id = null, $field = null){
+    if(empty($id) && !is_numeric($id)){
+        return false;
+    }
+    $list = S('action_list');
+    if(empty($list[$id])){
+        $map = array('status'=>array('gt', -1), 'id'=>$id);
+        $list[$id] = M('Action')->where($map)->field(true)->find();
+    }
+    return empty($field) ? $list[$id] : $list[$id][$field];
+}
+get_document_field($value = null, $condition = 'id', $field = null)
+说明：
+根据条件字段获取数据
+参数 mixed $value 条件，可用常量或者数组
+参数 string $condition 条件字段
+参数 string $field 需要返回的字段，不传则返回整个数据
+源码：
+function get_document_field($value = null, $condition = 'id', $field = null){
+    if(empty($value)){
+        return false;
+    }
+    //拼接参数
+    $map[$condition] = $value;
+    $info = M('Model')->where($map);
+    if(empty($field)){
+        $info = $info->field(true)->find();
+    }else{
+        $info = $info->getField($field);
+    }
+    return $info;
+}
+get_action_type($type, $all = false)
+说明：获取行为类型
+参数 intger $type 类型
+参数 bool $all 是否返回全部类型
+源码：
+function get_action_type($type, $all = false){
+    $list = array(
+        1=>'系统',
+        2=>'用户',
+    );
+    if($all){
+        return $list;
+    }
+    return $list[$type];
+}

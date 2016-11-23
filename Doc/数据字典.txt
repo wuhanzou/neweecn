@@ -1,0 +1,332 @@
+﻿action
+字段  类型  注释
+id  int(11) unsigned  自增主键
+name  char(30)  行为唯一标识
+title char(80)  行为说明
+remark  char(140) 行为描述
+rule  text  行为规则
+log text  日志规则
+status  tinyint(2)  状态（-1：已删除，0：禁用，1：正常）
+type  tinyint(2) unsigned 行为类型
+update_time int(11) unsigned  修改时间
+action_log
+字段  类型  注释
+id  int(10) unsigned  主键
+action_id int(10) unsigned  行为id
+user_id int(10) unsigned  执行用户id
+action_ip bigint(20)  执行行为者ip
+model char(50)  触发行为的表
+record_id int(10) 触发行为的数据id
+create_time int(10) unsigned  执行行为的时间
+remark  char(255) 日志备注
+status  tinyint(2)  状态（-1：已删除，0：禁用，1：正常）
+addons
+字段  类型  注释
+id  int(10) unsigned  主键
+name  varchar(40) 插件英文标识，区分大小写
+title varchar(20) 插件中文名
+description text  插件描述
+config  text  配置 序列化存放
+author  varchar(40) 作者
+version varchar(20) 版本号
+create_time int(10) unsigned  安装时间
+has_adminlist tinyint(1) unsigned 1-有后台列表 0-无后台列表
+status  tinyint(1)  状态 1-启用 0-禁用 -1-损坏
+attachment
+附件插件数据表
+字段  类型  注释
+id  int(10) unsigned  
+uid int(10) unsigned  用户ID
+title char(30)  附件显示名
+type  tinyint(3) unsigned 附件类型（0-目录，1-外链，2-文件）
+source  int(10) unsigned  资源ID（0-目录， 大于0-当资源为文件时其值为file_id,当资源为外链时其值为link_id）
+record_id int(10) unsigned  附件关联的记录ID
+download  int(10) unsigned  下载次数
+size  bigint(20) unsigned 附件大小（当附件为目录或外链时，该值为0）
+dir int(12) unsigned  上级目录ID（0-根目录）
+sort  int(8) unsigned 排序
+create_time int(10) unsigned  创建时间
+update_time int(11) unsigned  更新时间
+status  tinyint(1)  状态
+attribute
+模型属性定义表
+字段  类型  注释
+id  int(10) unsigned  
+name  varchar(30) 字段名
+title varchar(100)  字段注释
+field varchar(100)  字段定义
+type  varchar(20) 数据类型(用于表单展示)
+value varchar(100)  字段默认值
+remark  varchar(100)  备注
+is_show tinyint(1) unsigned 0：不显示，1：始终显示，2：新增时显示，3：编辑时显示
+extra varchar(255)  参数(表单显示)
+model_id  int(10) unsigned  模型id
+is_must tinyint(1) unsigned 是否必填
+status  tinyint(2)  状态
+update_time int(11) unsigned  更新时间
+create_time int(11) unsigned  创建时间
+validate_rule varchar(255)  验证规则　
+validate_time tinyint(1) unsigned 验证时间
+error_info  varchar(100)  验证错误提示文字　　　　
+validate_type varchar(25) 验证类型
+auto_rule varchar(100)　 自动完成规则　
+auto_time tinyint(1)  自动完成时间　
+auto_type varchar(25) 自动完成类型　
+auth_extend
+权限扩展表，当节点控制无法满足时，需要对权限控制进行扩展。例如：分类的授权即使用该表。
+字段  类型  注释
+group_id  mediumint(10) unsigned  用户组id
+extend_id mediumint(8) unsigned 扩展表中数据的id
+type  tinyint(1) unsigned 扩展类型标识 1:栏目分类权限
+索引定义：UNIQUE KEYgroup_extend_type(group_id,extend_id,type)
+auth_group
+用户组定义表
+字段  类型  注释
+id  mediumint(8) unsigned 用户组id,自增主键
+module  varchar(20) 用户组所属模块
+type  tinyint(4)  组类型
+title char(20)  用户组中文名称
+description varchar(80) 描述信息
+status  tinyint(1)  用户组状态：为1正常，为0禁用,-1为删除
+rules varchar(500)  用户组拥有的规则id，多个规则 , 隔开
+auth_group_access
+用户用户组关系对应表
+字段  类型  注释
+uid int(10) unsigned  用户id
+group_id  mediumint(8) unsigned 用户组id
+auth_rule
+权限规则表
+字段  类型  注释
+id  mediumint(8) unsigned 规则id,自增主键
+module  varchar(20) 规则所属module
+type  tinyint(2)  1-url;2-主菜单
+name  char(80)  规则唯一英文标识
+title char(20)  规则中文描述
+status  tinyint(1)  是否有效(0:无效,1:有效)
+condition varchar(300)  规则附加条件
+category
+字段  类型  注释
+id  int(10) unsigned  分类ID
+name  varchar(30) 标识
+title varchar(50) 标题
+pid int(10) unsigned  上级分类ID
+sort  int(10) unsigned  排序（同级有效）
+list_row  tinyint(3) unsigned 列表每页行数
+meta_title  varchar(50) SEO的网页标题
+keywords  varchar(255)  关键字
+description varchar(255)  描述
+template_index  varchar(100)  频道页模板
+template_lists  varchar(100)  列表页模板
+template_detail varchar(100)  详情页模板
+template_edit varchar(100)  编辑页模板
+model varchar(100)  关联模型
+type  varchar(100)  允许发布的内容类型
+link_id int(10) unsigned  外链（0-非外链，大于0-外链ID）
+allow_publish tinyint(3) unsigned 是否允许发布内容（0-不允许，1-只允许后台发表,2-前后台都可以发表）
+display tinyint(3) unsigned 可见性（0-所有人可见，1-管理员可见，2-不可见）
+reply tinyint(3) unsigned 是否允许回复
+check tinyint(3) unsigned 发布的文章是否需要审核（0：不需要，1：需要）
+reply_model varchar(100)  回复模型
+extend  text  扩展设置（JSON数据）
+create_time int(10) unsigned  创建时间
+update_time int(10) unsigned  更新时间
+status  tinyint(4)  数据状态（-1-删除，0-禁用，1-正常，2-待审核）
+icon  int(10) unsigned  分类图标
+channel
+字段  类型  注释
+id  int(10) unsigned  频道ID
+pid int(10) unsigned  上级频道ID
+title char(30)  频道标题
+url char(100) 频道连接
+sort  int(10) unsigned  排序
+create_time int(10) unsigned  创建时间
+update_time int(10) unsigned  更新时间
+target  tinyint(1)  是否新窗口打开(0-否，1-是)
+status  tinyint(4)  状态
+config
+字段  类型  注释
+id  int(10) unsigned  配置ID
+name  varchar(30) 配置名称
+type  tinyint(3) unsigned 配置类型（0-数字，1-字符，2-文本，3-数组，4-枚举，5-多选）
+title varchar(50) 配置说明
+group tinyint(3) unsigned 配置分组（0-无分组，1-基本设置）
+extra varchar(255)  配置值
+remark  varchar(100)  配置说明
+create_time int(10) unsigned  创建时间
+update_time int(10) unsigned  更新时间
+status  tinyint(4)  状态
+value text  配置值
+sort  smallint(3) unsigned  排序
+document
+文档模型基础表
+字段  类型  注释
+id  int(10) unsigned  文档ID
+uid int(10) unsigned  用户ID
+name  char(40)  标识
+title char(80)  标题
+category_id int(10) unsigned  所属分类
+description char(140) 描述
+root  int(10) unsigned  根节点
+pid int(10) unsigned  所属ID
+model_id  tinyint(3) unsigned 内容模型ID
+type  tinyint(3) unsigned 内容类型（1-目录，2-主题，3-段落）
+position  smallint(5) unsigned  推荐位(1-列表推荐，2-频道页推荐，4-首页推荐，[同时推荐多个地方相加即可]）
+link_id int(10) unsigned  外链（0-非外链，大于0-外链ID）
+cover_id  int(10) unsigned  封面（0-无封面，大于0-封面图片ID）
+display tinyint(3) unsigned 可见性（0-不可见，1-所有人可见）
+deadline  int(10) unsigned  截至时间（0-永久有效）
+attach  tinyint(3) unsigned 附件数量
+view  int(10) unsigned  浏览量
+comment int(10) unsigned  评论数
+extend  int(10) unsigned  扩展统计字段，根据需求自行使用
+level int(10) unsigned  优先级（越高排序越靠前）
+create_time int(10) unsigned  创建时间
+update_time int(10) unsigned  更新时间
+status  tinyint(4)  数据状态（-1-删除，0-禁用，1-正常，2-待审核，3-草稿）
+document_article
+文章模型扩展表
+字段  类型  注释
+id  int(10) unsigned  文档ID
+parse tinyint(3) unsigned 内容解析类型（0-html,1-ubb,2-markdown）
+content text  文章内容
+template  varchar(100)  详情页显示模板
+bookmark  int(10) unsigned  文档收藏数
+document_download
+下载模型扩展表
+字段  类型  注释
+id  int(10) unsigned  文档ID
+parse tinyint(3) unsigned 内容解析类型（0-html,1-ubb,2-markdown）
+content text  下载详细描述
+template  varchar(100)  详情页显示模板
+file_id int(10) unsigned  文件ID
+download  int(10) unsigned  下载次数
+size  bigint(20) unsigned 文件大小
+file
+文件表，通过FileModel上传的文件信息会写入该表
+字段  类型  注释
+id  int(10) unsigned  文件ID
+name  char(30)  原始文件名
+savename  char(20)  保存名称
+savepath  char(30)  文件保存路径
+ext char(5) 文件后缀
+mime  char(40)  文件mime类型
+size  int(10) unsigned  文件大小
+md5 char(32)  文件md5
+sha1  char(40)  文件 sha1编码
+location  tinyint(3) unsigned 文件保存位置（0-本地，1-FTP）
+create_time int(10) unsigned  上传时间
+hooks
+钩子表
+字段  类型  注释
+id  int(10) unsigned  主键
+name  varchar(40) 钩子名称
+description text  描述
+type  tinyint(1) unsigned 1-Controller 2-Widget
+update_time int(10) unsigned  更新时间
+addons  varchar(255)  钩子挂载的插件 '，'分割
+member
+会员信息表
+字段  类型  注释
+uid int(10) unsigned  用户ID
+nickname  char(16)  昵称
+sex tinyint(3) unsigned 性别（0-女，1-男）
+birthday  date  生日
+qq  char(10)  
+score mediumint(8)  用户积分
+login int(10) unsigned  登录次数
+reg_ip  bigint(20)  注册IP
+reg_time  int(10) unsigned  注册时间
+last_login_ip bigint(20)  最后登录IP
+last_login_time int(10) unsigned  最后登录时间
+status  tinyint(4)  会员状态
+menu
+字段  类型  注释
+id  int(10) unsigned  文档ID
+title varchar(50) 标题
+pid int(10) unsigned  上级分类ID
+sort  int(10) unsigned  排序（同级有效）
+url char(255) 链接地址
+hide  tinyint(1) unsigned 是否隐藏 1-是0-否
+tip varchar(255)  提示
+group varchar(50) 分组
+is_dev  tinyint(1)  是否开发者模式可见
+model
+字段  类型  注释
+id  int(10) unsigned  模型ID
+name  char(30)  模型标识
+title char(30)  模型名称
+extend  int(10) unsigned  继承的模型
+relation  varchar(30) 继承与被继承模型的关联字段
+need_pk tinyint(1)  新建表时是否需要主键字段
+field_sort  text  表单字段排序
+field_group varchar(255)  字段分组
+attribute_list  text  属性列表（表的字段）
+template_list varchar(100)  列表模板
+template_add  varchar(100)  新增模板
+template_edit varchar(100)  编辑模板
+list_grid varchar(255)  列表定义
+list_row  smallint(2) unsigned  列表数据长度
+search_key  varchar(50) 默认搜索字段
+search_list varchar(255)  高级搜索的字段
+create_time int(10) unsigned  创建时间
+update_time int(10) unsigned  更新时间
+status  tinyint(3) unsigned 状态
+engine_type varchar(25) 引擎类型，默认MyISAM
+picture
+字段  类型  注释
+id  int(10) unsigned  主键id自增
+path  varchar(255)  路径
+url varchar(255)  图片链接
+md5 char(32)  文件md5
+sha1  char(40)  文件 sha1编码
+status  tinyint(1)  状态
+create_time int(10) unsigned  创建时间
+ucenter_admin
+字段  类型  注释
+id  int(10) unsigned  管理员ID
+member_id int(10) unsigned  管理员用户ID
+status  tinyint(3) unsigned 管理员状态
+ucenter_app
+字段  类型  注释
+id  int(10) unsigned  应用ID
+title varchar(30) 应用名称
+url varchar(100)  应用URL
+ip  char(15)  应用IP
+auth_key  varchar(100)  加密KEY
+sys_login tinyint(1) unsigned 同步登陆
+allow_ip  varchar(255)  允许访问的IP
+create_time int(10) unsigned  创建时间
+update_time int(10) unsigned  更新时间
+status  tinyint(4)  应用状态
+ucenter_member
+字段  类型  注释
+id  int(10) unsigned  用户ID
+username  char(16)  用户名
+password  char(32)  密码
+email char(32)  用户邮箱
+mobile  char(15)  用户手机
+reg_time  int(10) unsigned  注册时间
+reg_ip  bigint(20)  注册IP
+last_login_time int(10) unsigned  最后登录时间
+last_login_ip bigint(20)  最后登录IP
+update_time int(10) unsigned  更新时间
+status  tinyint(4)  用户状态
+ucenter_setting
+字段  类型  注释
+id  int(10) unsigned  设置ID
+type  tinyint(3) unsigned 配置类型（1-用户配置）
+value text  配置数据
+url
+链接表
+字段  类型  注释
+id  int(11) unsigned  链接唯一标识
+url char(255) 链接地址
+short char(100) 短网址
+status  tinyint(2)  状态（-1：删除，0：禁用，1：正常，2：未审核）
+create_time int(10) unsigned  创建时间
+userdata
+用户数据表，存储用户收藏之类的数据
+字段  类型  注释
+uid int(10) unsigned  用户id
+type  tinyint(3)  类型标识（1-文档收藏）
+target_id int(10) 数据目标id

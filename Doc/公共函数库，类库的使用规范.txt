@@ -1,0 +1,37 @@
+﻿函数
+函数命名
+函数命名，全部使用小写，单词直接使用 _ 连接，函数名的名称应与函数功能相符，且函数名中使用的单词，应该是全称单词．
+函数文件
+二次开发时增加的函数，尽量使用独立的新函数文件保存，通过配置载入，以方便未来的升级．
+代码质量
+由于函数通常会被多次调用，因此应确保函数代码质量，仔细检测测试保证函数在执行过程中不会抛出任何级别的PHP错误，否则部署后可能引起严重的性能问题．
+其他
+函数应该少而精干，数据的增删改查，尽量通过模型方法实现，以利于代码管理维护．通常定义函数是为了在模板中查询和转换数据，或者在不同模块之间实现代码重用．
+类库
+模块类库
+模块的类库，即Application目录下的控制器，模型等类。文件和类名的命名规则不变，只是控制器命名默认使用Controller代替了Action，如果还想用Action，在Common/Config/config.php 中配置 DEFAULT_C_LAYER=>'Action'
+模块类库的命名空间定义见： 控制器定义 和 模型定义
+插件类库
+即Addons目录下插件的类，文件模板如下：
+文件名：Addons/插件名/插件名Addon.class.php
+<?php
+namespace Addons\插件名;
+use Common\Controller\Addon;
+class 插件名Addon extends Addon{
+}
+文件名：Addons/插件名/Controller/控制器名Controller.class.php
+<?php
+namespace Addons\插件名\Controller;
+use Home\Controller\AddonsController;
+class 控制器名Controller extends AddonsController{
+}
+文件名：Addons/插件名/Model/模型名Model.class.php
+<?php
+namespace Addons\插件名\Model;
+use Think\Model;
+class 模型名Model extends Model{
+}
+ThinkPHP框架类库
+OneThink基于ThinkPHP3.2，类库文件位于ThinkPHP/Library目录，框架类库全部使用命名空间载入，在控制器和模型中使用框架类库时，只需代码前面用 use 声明要载入的类库的命名空间即可．
+关于命名空间，参考ThinkPHP3.2文档
+您可以在 ThinkPHP/Library目录下创建新的目录放置其他类库文件，相应地这些类库文件必须修改类库的命名空间定义和访问．

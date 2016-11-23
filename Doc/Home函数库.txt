@@ -1,0 +1,14 @@
+﻿Home应用下公共函数
+位于/Application/Home/Common/function.php中，供示例前台调用．前台应用开发中，通常该文件会根据实际需求修改．
+check_verify($code, $id=1)
+说明：检测提交的验证码是否正确
+参数 integer $id 验证码ID
+返回值 boolean 检测结果
+get_list_count($category, $status = 1)
+说明：获取某个分类的文档总数
+参数 string $category 分类ID
+参数 integer $status 数据状态类型(1－正常，0－禁用，-1－删除)
+get_part_count($id)
+说明：获取某个文档的段落子文档总数
+参数 string $id 文档ID
+返回值 integer 段落总数

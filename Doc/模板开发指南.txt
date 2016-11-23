@@ -1,0 +1,29 @@
+﻿基础知识
+见 ThinkPHP3.2手册 视图部分
+Onethink后台模板
+后台使用了模板继承，基础模板位于 View/Public/base.html。其他模板都位于对应的控制器模板目录。
+后台公共js文件位于Public/Admin/Js/common.js,这个js文件是在页面主体内容之后加载。
+后台公共css文件位于Public/Admin/Css/base.css
+在具体的控制器模板中，你可以通过继承重置<block name="script"></block>来向当前模板加入新的js。这些代码在common.js之后执行。
+Onethink前台模板
+前台模板比较少，通常二次开发时会删除所有模板，根据设计重新组织和编写前台模板，所以这里对模板文件和目录不做介绍。
+标签库
+OneThink定义了两个标签库Think和Article，类文件位于ThinkPHP/Library/OT/TagLib，文件名为Article.class.php和Think.class.php，如有需要，您可以在该目录下创建自己的标签库。
+Think标签库
+Article标签库
+    'partlist' => array('attr' => 'id,field,page,name', 'close' => 1), //段落列表
+    'partpage' => array('attr' => 'id,listrow', 'close' => 0), //段落分页
+    'prev'     => array('attr' => 'name,info', 'close' => 1), //获取上一篇文章信息
+    'next'     => array('attr' => 'name,info', 'close' => 1), //获取下一篇文章信息
+    'page'     => array('attr' => 'cate,listrow', 'close' => 0), //列表分页
+    'position' => array('attr' => 'pos,cate,limit,filed,name', 'close' => 1), //获取推荐位列表
+    'list'     => array('attr' => 'name,category,child,page,row,field', 'close' => 1), //获取指定分类列表
+Article:list 标签补充说明
+category 属性 最好是带单引号， 如 category="'0'" 因为标签库里判断了empty， 可能导致0 相当于没传参数
+Article:position 标签补充说明：
+pos 是数字，后台有 ：
+    1:列表推荐
+    2:频道推荐
+    4:首页推荐
+所以一般前台读取的时候，一般传指定的数字如 pos="1" 这种
+而cate 这边比较坑， 默认你传指定的45 单数字没问题， 传多个分类 45,46 这样不行的，必须带单引号 如 cate="'45,46'"

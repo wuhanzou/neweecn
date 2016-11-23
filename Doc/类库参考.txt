@@ -1,0 +1,42 @@
+﻿类库的位置
+首先类库是系统的LIB_PATH下及ThinkPHP/Libary下。然后除了以前的Com、Org还有之前的CORE改名THINK了，多了OT专门自定义的类库OT
+类库的引用
+由于使用了命名空间的原因，OT对：Libary目录下定义的引入规则是命名空间为目录名后会自动加载，所以LIB_PATH下类库在使用时必需按照目录结构定义下该类的命名空间使用。如在LIB_PATH下Com里的Page类，需在类头部使用命名 命名空间 namespace Com;然后在使用的地方use下 ，use Com\Page;然后new Page()或者在实例化时指明所用的命名空间 无需use,如 new Com/Page;
+类库的使用
+之前Extend里的类库的使用和以前一样，不做说明。重点讲这次正式版里我们使用的一些类库。
+1.Database类
+用于数据库备份的类。有create和backup和import 3个公有方法。分别对应了写入初始化文件、备份和导入数据库。
+create:
+ /**
+ * 写入初始数据
+ * @return boolean true - 写入成功，false - 写入失败
+ */
+public function create(){
+backup:
+/**
+ * 备份表结构
+ * @param  string  $table 表名
+ * @param  integer $start 起始行数
+ * @return boolean        false - 备份失败
+ */
+public function backup($table, $start){
+import:
+  public function import($start){
+2.Upload 上传类
+值得注意的是ot的上传类被我们改写了，做成驱动扩展的形式，为了能方便的切换不同环境的上传。
+驱动位于Com/Uploads/Driver下。目前支持Bcs百度云、FTP、Local本地、Qiniu七牛、Sae、Upyun友拍云这几种驱动上传。
+使用时，在构造方法里传上传配置、驱动类型、驱动配置即可。上传调用upload、uploadOne 方法。
+4.Vrtify验证类。
+前后台的登录验证码有用到
+5.Qiniu 七牛云存储类。
+参见后台里 Admin/Qiniu/index控制器的示列
+6.Page分页类
+tp自带的分页类扩展
+7.ThinkImage类
+在Util/Image/下， 也是驱动扩展模式。支持GD库和imagcik扩展，使用见类里注释和Image目录下的readme.md。
+8.Auth权限类
+在Util下，官方扩展里的权限验证类库，参考auth.sql，luofei的比RBAC更好的权限认证方式（Auth类认证)
+9.Article Taglib类
+在OT/TagLib下，Think标签库和以前一样不讲了。 用法 苗儿说明
+10.DataDictionary数据字典类
+用于OT手册里输出表的结构的ASCII格式字符串用的，方便markdown解析使用。主体类还是拿yangweijie之前写的一个输出表格文本的类，移植于symfony改的，加了generate和generateAll方法，用于输出当前ot项目里的单个表和整个数据库数据字典表格字符串。PS：generate传的是真实表名不传tp里M里的表名。

@@ -1,0 +1,31 @@
+﻿权限扩展
+OneThink权限判断流程按顺序如下：
+IP 权限检测，如果配置了IP白名单(ADMIN_ALLOW_IP)，则仅有白名单的IP可以通过这一步检测。其他IP被直接拒绝。
+特殊节点检测，特殊节点有两种。一种是任何管理员都可以访问的节点(ALLOW_VISIT)，例如修改密码; 一种是除超级管理员外，任何管理员都不能访问的节点(DENY_VISIT), 例如仅供超级管理员使用的功能或者某些不提供外部访问但因为编码需要不得不定义为public的方法。
+如果ALLOW_VISIT检测通过，直接放行访问。如果DENY_VISIT检测通过，直接拒绝。如果二者都未通过，则会进入下一步权限检测。
+PS:在二次开发完成后，应仔细检查每个控制的公共方法，包括继承的公共方法。确保每个公共方法，出现在菜单，ALLOW_VISIT，DENY_VISIT之一。
+动态检测，即有些url是后来动态的，例如分类，不可能我们每创建一个分类就为这个分类添加一个节点，更不可能每添加一篇文档就为这篇文档添加一个节点，这样不仅管理麻烦而且节点数量也会爆炸性增长。因此，需要写一段程序来检测此类url，详细扩展方法见下文。
+菜单节点检测，即通过菜单”管理配置“的节点，在”权限管理->访问授权“进行设置控制。检测通过后放行，否则拒绝。
+动态权限检测扩展
+相关数据表
+auth_extend
+group_id 保存用户组id
+type 权限扩展类型，"分类授权"的type为1，如果要扩展授权，您要为您的扩展权限类型规定一个type值，与其他类型的扩展授权区分。
+extend_id 保存用户组关联的扩展数据的id，对"分类授权"而言，该字段保存的自然就是分类的id了
+模型代码编写
+您需要在 AuthGroupModel 模型中定义一个静态方法，供控制器查询某个用户对某个类型的扩展权限拥有权限的数据id。
+以"分类授权"为例，AuthGroupModel::getAuthCategories(UID) 方法做了如下事情：
+根据用户id,查出用户所属用户组group_id
+根据group_id,从auth_extend表以type=1为条件查出了extend_id,即用户拥有权限的分类。
+另外，您需要定义一个方法，用来保存权限设定。
+以"分类授权"为例，AuthGroupModel::addToCategory($category_id,$uid) 即用来把分类的权限设定写入auth_extend表
+控制器代码编写
+用来执行动态检测的程序代码，定义在相应控制器的 checkDynamic方法，因此，需要扩展动态权限检测时，只需要在你的控制器中创建checkDynamic方法，并在其中实现检测业务逻辑。OneThink的分类和文档的权限控制即通过在ArticleController中定义checkDynamic方法实现。
+与模板有关的控制器代码编写就不再介绍。
+以"分类授权"为例,相关方法如下：
+addToCategory() 为用户授权某个分类
+category() 输出分类授权设定页面
+模板代码编写
+修改View/AuthManager/index.html,增加一个链接，指向具体的权限设定页面
+例如："分类授权"的代码：<a href="{:U('AuthManager/category?group_name='.$vo['title'].'&group_id='.$vo['id'])}" >分类授权</a>
+创建您的授权设定页模板，分类授权设置页模板位于 View/AuthManager/category.html

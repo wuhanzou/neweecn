@@ -1,0 +1,135 @@
+﻿文件
+位于/Application/Common/Common/function.php中
+is_login()
+说明: 检测用户是否已登陆
+返回值: integer 0-未登录，大于0-当前登录用户ID
+is_administrator($uid = null)
+说明：检测用户是否是超级管理员
+返回值 boolean true-管理员，false-非管理员
+str2arr($str, $glue = ',')
+说明：字符串转换为数组，与explode功能相同，只是参数顺序不同
+参数 string $str 要分割的字符串
+参数 string $glue 分割符
+返回值 array
+arr2str($arr, $glue = ',')
+说明：数组转换为字符串，与implode功能相同，只是参数顺序不同
+参数 array $arr 要连接的数组
+参数 string $glue 分割符
+返回值 string
+think_encrypt($data, $key = '', $expire = 0)
+说明：数据加密方法，将需要加密的数据串加密为字符串。
+参数 string $data 要加密的字符串
+参数 string $key 加密密钥
+参数 int $expire 过期时间 单位 秒
+返回值 string
+think_decrypt($data, $key = '')
+说明：数据解密方法，将think_encrypt加密过的数据还原。
+list_sort_by($list,$field, $sortby='asc')
+说明： 对查询结果集进行排序
+参数 array $list 查询结果
+参数 string $field 排序的字段名（单个）
+参数 array $sortby 排序类型 asc正向排序 desc逆向排序 nat自然排序
+返回值 array
+data_auth_sign($data)
+说明：数据签名认证，用于验证提供的数据与存储的数据是否一致。
+参数 array $data 被认证的数据
+返回值 string 签名
+list_to_tree($list, $pk='id', $pid = 'pid', $child = '_child', $root = 0)
+说明：把返回的查询数据集转换成多维数组的树状结构数据
+参数 array $list 要转换的数据集
+参数 string $pk 数据集的主键
+参数 string $pid 父id数据字段
+参数 string $child 用来保存子数据的键名
+参数 int $root 根元素的父id
+返回值 array
+tree_to_list($tree, $child = '_child', $order='id', &$list = array())
+说明： 将list_to_tree生成的多维数组树状结构数据还原成普通的查询列表
+参数 array $tree list_to_tree生成的多维数组树状结构数据
+参数 string $child 保存子数据的键名
+参数 string $order 排序显示的键，一般是主键 升序排列
+参数 array $list 过渡用的中间数组
+返回值 array 返回排过序的列表数组
+format_bytes($size, $delimiter = '')
+说明：字节格式化 参数 number $size 字节数 参数 string $delimiter 数字和单位分隔符 返回值 string 格式化后的带单位的大小，例如：2KB
+get_addon_class($name)
+说明：根据插件简单类名返回插件类的命名空间类名
+参数 strng $name 插件名
+返回值 string
+get_addon_config($name)
+说明：获取插件类的配置数组
+参数 string $name 插件名
+addons_url($url, $param = array())
+说明：生成用于访问插件控制器的url
+参数 string $url url 例如：'Attachment://Attachment/download'
+参数 array $param 参数,例如'id=2'
+返回值 string
+time_format($time = NULL,$format='Y-m-d H:i')
+说明：时间戳格式化,与date函数功能相同，只是参数顺序不同
+参数 int $time
+get_username($uid = 0)
+说明：根据用户ID获取用户名。首先会尝试从session获取，其次尝试从缓存获取，如果没有获取到，从数据库获取并缓存。
+参数 integer $uid 用户ID 返回值 string 用户名
+get_nickname($uid = 0)
+说明：根据用户ID获取用户昵称。首先会尝试从session获取，其次尝试从缓存获取，如果没有获取到，从数据库获取并缓存。
+根据用户ID获取用户昵称
+参数 integer $uid 用户ID
+返回值 string 用户昵称
+get_category($id, $field = null)
+说明：获取某个分类的某个字段的值并缓存
+参数 integer $id 分类ID
+参数 string $field 要获取的字段名
+返回值 string 字段的值
+get_category_name($id)
+说明：根据ID获取分类标识
+get_category_title($id)
+说明：根据ID获取分类名称
+get_document_model($model_id = null, $field = null)
+说明：根据模型id获取文档模型的某个字段的值并缓存
+参数 integer $model_id 模型ID
+参数 string $field 模型字段
+返回值 array
+action_log($action = null, $model = null, $record_id = null, $user_id = null)
+说明：执行该行为的规则，并记录行为日志
+参数 string $action 行为标识
+参数 string $model 触发行为的模型名，例如：'document'
+参数 int $record_id 触发行为的记录id
+参数 int $user_id 执行行为的用户id
+返回值 boolean
+parse_action($action = null, $self)
+说明： 将一条行为定义文本解析为行为规则数组。
+规则定义 table:$table|field:$field|condition:$condition|rule:$rule[|cycle:$cycle|max:$max][;......] 规则字段解释：table->要操作的数据表，不需要加表前缀； field->要操作的字段； condition->操作的条件，目前支持字符串，默认变量{$self}为执行行为的用户 rule->对字段进行的具体操作，目前支持四则混合运算，如：1+score*2/2-3 cycle->执行周期，单位（小时），表示$cycle小时内最多执行$max次 max->单个周期内的最大执行次数（$cycle和$max必须同时定义，否则无效） 单个行为后可加 ； 连接其他规则
+参数 string $action 行为id或者name
+参数 int $self 替换规则里的变量为执行用户的id
+返回值 boolean|array: false解析出错 ， 成功返回规则数组
+execute_action($rules = false, $action_id = null, $user_id = null)
+说明：执行行为
+参数 array $rules parse_action解析后的行为规则数组
+参数 int $action_id 行为id
+参数 array $user_id 执行的用户id
+返回值 boolean false 失败 ， true 成功
+create_dir_or_files($files)
+说明：基于数组创建目录和文件，每个目录或文件作为数组的一个元素
+array_column(array $input, $columnKey, $indexKey = null)
+说明：PHP5.5的自带函数兼容实现，来自PHP手册
+get_table_name($model_id = null)
+说明：获取表名（不含表前缀）
+参数 string $model_id
+返回值 string 表名
+get_model_attribute($model_id, $group = true)
+说明：获取模型属性信息并缓存
+参数 integer $id 属性ID
+参数 string $field 要获取的字段名
+返回值 string 属性信息
+api($name,$vars=array())
+说明：调用系统的API接口的静态方法，例如：api('User/getName','id=5');// 调用公共模块的User接口的getName方法
+参数 string $name 格式 [模块名]/接口名/静态方法名
+参数 array|string $vars 参数
+get_link($link_id = null, $field = 'url')
+说明: 根据外链id(onethink_url表)，返回外链的其他字段值，默认返回url字段值
+参数　int $link_id　主键值 参数 string $field　字段值
+get_cover($cover_id, $field = null)
+说明：根据图片id(onethink_picture)返回图片的其他字段值，默认返回所有整行记录
+参数　int $cover_id　主键值 参数 string $field　字段名 返回值： 完整的数据 或者 指定的$field字段值
+check_document_position($pos = 0, $contain = 0)
+说明：　文档推荐位检测．检测文档推荐位是否含有含有某个推荐位设置．例如，文档推荐位的值为5，则 check_document_position(5, 1)和｀check_document_position(5, 4)｀都返回true，而check_document_position(5, 8)返回false．实际上，该函数做的是位检测，所以也可以用于检测其通过位相加保存数据的情况．
+参数 number $pos 推荐位的值（数据库保存的字段值） 参数 number $contain 推荐位值(推荐位定义) 返回　true 包含 ， false 不包含
