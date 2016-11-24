@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>i晚黎 - i晚黎博客</title>
+<title>Laravel上传图片到七牛 - i晚黎博客</title>
 <meta name="keywords" content="i晚黎,晚黎博客,Laravel,PHP,PHP框架,教程,资源,学习,笔记" />
 <meta name="description" content="i晚黎博客致力于提供优质学习资源,分享个人笔记.">
 <meta name="author" content="iwanli.me">
@@ -13,6 +13,7 @@
 <link href="css/animate.css" rel="stylesheet" type="text/css"/>
 <link href="css/global.css" rel="stylesheet" type="text/css"/>
 <link href="css/purple.css" rel="stylesheet" type="text/css"/>
+<link href="css/monokai-sublime.css" rel="stylesheet" type="text/css"/>
 <link rel="shortcut icon" href="http://www.iwanli.me/front/img/favicon.ico"/>
 </head>
 <body>
@@ -105,175 +106,206 @@
         </div>
     </nav>
 </header>
-    <div class="promo-block-v1 promo-block-v1-bg-img-v3 fullheight text-center">
-    <div class="container vertical-center-aligned">
-        <h1 class="promo-block-v1-title wow fadeInUp" data-wow-duration="1s" data-wow-delay="0">Welcome To iWanli's Blog</h1>
-        <p class="promo-block-v1-text margin-b-40 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">
-            I am a slow walker, but I never walk backwards...
-        </p>
+    <section class="breadcrumbs-v5 bg-position-fixed breadcrumbs-v5-bg-img-v4">
+    <div class="container">
+        <h2 class="breadcrumbs-v5-title">I am Wanli</h2>
+        <span class="breadcrumbs-v5-subtitle">I am a slow walker, but I never walk backwards...</span>
     </div>
-</div>
-<div class="bg-color-sky-light">
-    <div class="container-sm">
-        <div class="bg-color-white border-1 padding-40 margin-t-o-80">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="heading-v1 margin-b-20 text-center">
-                        <h2 class="heading-v1-title">Story About Me</h2>
-                        <span class="heading-v1-subtitle">碎碎念念的话，伴随着成长</span>
-                    </div>
-
-                    <p>时间真的好快，嗖的一下就长成了今天这模样。永远不会像《挪威森林》村上写的那一句话：一直以为十八岁之后是十九岁，十九岁后是十八岁，如此反复。如今说好的十八岁离开好几年了，好宅不代表着我老，如果认真的去做的更好，只是个开始。如今过的日子并不好过的话，完全可以付出更多的努力再来活一次，找到真正想要的自己。</p>
-                    <p>执着的去做，不怕舍不得睡觉、玩乐、安逸的时间去拼，要知道现在的痛苦和难受都是以前放弃了太多努力。所以现在要抓紧努力，哪怕需要你花全部精力。去拼，如果没有天分，就用时间去换，走得再慢也不要后退。希望再过几年真的被喊叔叔的年纪，那时候回头感谢一下现在选择拼搏的我。</p>
-                    <p>没有天分，就用时间去换......</p>
-                </div>
-            </div>
-        </div>
-        <div class="content"></div>
+</section>
+<section class="breadcrumbs-v1">
+    <div class="container">
+        <h2 class="breadcrumbs-v1-title">Article</h2>
+        <ol class="breadcrumbs-v1-links">
+            <li><a href="http://www.iwanli.me"><i class="fa fa-home"></i> Home</a></li>
+            <li><a href="http://www.iwanli.me/cate/1"><i class="fa fa-navicon"></i> 前端</a></li>
+            <li class="active">Laravel上传图片到七牛</li>
+        </ol>
     </div>
-</div>
-
-<div class="content-md container" id="pageScroll">
-    <div class="heading-v3 text-center">
-        <h2 class="heading-v3-title">Great Diary</h2>
-        <div class="divider-v3"><div class="divider-v3-element"><i class="divider-v3-icon fa fa-skyatlas"></i></div></div>
-        <p class="heading-v3-text">It's the small details that will make a big difference</p>
-    </div>
-</div>
+</section>
 
     <div class="bg-color-sky-light">
         <div class="content-md container">
             <div class="row">
                 <div class="col-md-9 md-margin-b-30">
-                    <div class="masonry-grid">
-            <div class="masonry-grid-item col-1">
-        <article class="blog-grid">
-            <div class="blog-grid-box-shadow">
-                <div class="blog-grid-content">
-                    <h2 class="blog-grid-title-md"><a href="http://www.iwanli.me/article/57">Laravel上传图片到七牛</a></h2>
-                                            <div class="starImg">
-                            <a href="http://www.iwanli.me/article/57"><img class="img-responsive margin-b-10" src="picture/dec920cbf2a3fe7a490459e97451ba8f.png" alt="Laravel上传图片到七牛"></a>
-                        </div>
-                                        <p>本文主介绍上传图片到七牛，并获取七牛的图片路径。主要细讲七牛的配置问题，发现很多小伙伴都对七牛的配置不是很熟悉~</p>
-                </div>
-                <div class="blog-grid-supplemental">
-                    <span class="blog-grid-supplemental-title">
-                        <a class="blog-grid-supplemental-category" href="http://www.iwanli.me/cate/1"><i class="fa fa-leaf"></i> 前端</a>
-                         -  <i class="fa fa-clock-o"></i> 2016-11-08 13:00:39
-                    </span>
-                    <span class="blog-grid-supplemental-title pull-right">
-                        <i class="fa fa-eye"></i> 189
-                    </span>
-                </div>
-            </div>
-        </article>
+                    <article class="blog-grid margin-b-30">
+    <!-- Blog Grid Content -->
+    <div class="blog-grid-content">
+        <h2 class="blog-grid-title-lg">Laravel上传图片到七牛</h2>
+
+                <img class="img-responsive margin-b-20" src="picture/dec920cbf2a3fe7a490459e97451ba8f.png" alt="">
+                <blockquote>
+<p>本文主介绍上传图片到七牛，并获取七牛的图片路径。主要细讲七牛的配置问题，发现很多小伙伴都对七牛的配置不是很熟悉~</p>
+</blockquote>
+<h2 id="h2-u65B0u5EFAu9879u76EE"><a name="新建项目" class="reference-link"></a><span class="header-link octicon octicon-link"></span>新建项目</h2><p>这里直接用一个新的Laravel5.3的项目进行演示，其他版本都是一样不会影响功能，顶多是路由位置不一样而已。已有项目的小伙伴可直接跳过次段。</p>
+<pre><code># 新建项目
+laravel new laravel-qiniu
+
+cd laravel-qiniu
+</code></pre><h2 id="h2--laravel-"><a name="安装Laravel七牛扩展包" class="reference-link"></a><span class="header-link octicon octicon-link"></span>安装Laravel七牛扩展包</h2><p>过Composer安装：</p>
+<pre><code class="lang-php">composer  require zgldh/qiniu-laravel-storage
+</code></pre>
+<p>然后在  <code>config/app.php</code> 中注册服务提供者：</p>
+<pre><code class="lang-php">zgldh\QiniuStorage\QiniuFilesystemServiceProvider::class
+</code></pre>
+<p>接下来在  <code>config/filesystems.php</code> 里的disks中新增七牛配置：</p>
+<pre><code class="lang-php">&#39;qiniu&#39; =&gt; [
+    &#39;driver&#39;  =&gt; &#39;qiniu&#39;,
+    &#39;domains&#39; =&gt; [
+        &#39;default&#39;   =&gt; &#39;xxxxx&#39;, //你的七牛域名
+        &#39;https&#39;     =&gt; &#39;xxxxx&#39;,         //你的HTTPS域名
+        &#39;custom&#39;    =&gt; &#39;xxxxx&#39;,     //你的自定义域名
+     ],
+    &#39;access_key&#39;=&gt; &#39;&#39;,  //AccessKey
+    &#39;secret_key&#39;=&gt; &#39;&#39;,  //SecretKey
+    &#39;bucket&#39;    =&gt; &#39;&#39;,  //Bucket名字
+    &#39;notify_url&#39;=&gt; &#39;&#39;,  //持久化处理回调地址
+],
+</code></pre>
+<p>OK，扩展包的安装就暂时介绍到这里，接下来我们要去七牛注册一个账号并且将上面的配置完善。</p>
+<h2 id="h2-u4E03u725Bu8D26u53F7u6CE8u518Cu53CAu914Du7F6E"><a name="七牛账号注册及配置" class="reference-link"></a><span class="header-link octicon octicon-link"></span>七牛账号注册及配置</h2><p>先去七牛注册一个账号，点击官网的注册会让我们选择用户类型，这里我就选择个人用户。</p>
+<p><img src="picture/31f65056c3a0ef0675d674765244c1b4.jpg" alt=""></p>
+<p>接下来按照流程来进项注册就OK了，我就不演示给大家看了。由于我的手机号已经注册了，这里只能给大家看一下我已经添加了存储对象的实例了。</p>
+<p><img src="picture/1b197cd99b6be0122d9fe387b77520f8.jpg" alt=""></p>
+<p><img src="picture/68bfb991d0a7c394c761b87a6a0f53fd.jpg" alt=""></p>
+<p>OK ，简单的用图给大家看一下七牛的默认域名及自定义域名在哪里看。下面给大家看一下七牛的秘钥的位置：</p>
+<p><img src="picture/0a1b7f09a5617fe330369578172be74a.jpg" alt=""></p>
+<p>点击秘钥管理，就可与看到个人七牛的秘钥了：</p>
+<p><img src="picture/1959dbdbf6ccf8dfbf2a4002198c3211.jpg" alt=""></p>
+<h2 id="h2--laravel-"><a name="七牛在Laravel中的配置" class="reference-link"></a><span class="header-link octicon octicon-link"></span>七牛在Laravel中的配置</h2><p>上面已经介绍相关的配置在哪儿，现在我们要将这些配置在Laravel中使用：</p>
+<p><img src="picture/qq截图20161109172958.jpg" alt=""></p>
+<h2 id="h2-u4E0Au4F20u56FEu7247u5230u4E03u725B"><a name="上传图片到七牛" class="reference-link"></a><span class="header-link octicon octicon-link"></span>上传图片到七牛</h2><p>简单用一个示例来演示前端上传图片到后台后，用七牛的扩展上传图片</p>
+<p>先在 <code>resources\views</code> 下新建 <code>index.blade.php</code> 视图</p>
+<pre><code class="lang-php">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;上传图片&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;form method=&quot;post&quot; action=&quot;&quot; enctype=&quot;multipart/form-data&quot;&gt;
+        &lt;input type=&quot;file&quot; name=&quot;file&quot;&gt;
+        &lt;button type=&quot;submit&quot;&gt;上传图片&lt;/button&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>页面代码简单，没有任何样式（请原谅我偷懒），新建 <code>UplaodController</code> 上传文件控制器：</p>
+<pre><code>php artisan make:controller UploadController
+</code></pre><p>实现上传方法：</p>
+<pre><code>&lt;?php
+namespace App\Http\Controllers;
+use Illuminate\Http\Request;
+use zgldh\QiniuStorage\QiniuStorage;
+class UploadController extends Controller
+{
+    /**
+     * 上传文件到七牛
+     * @author 晚黎
+     * @date   2016-11-09T16:58:37+0800
+     * @param  Request                  $request [description]
+     * @return [type]                            [description]
+     */
+    public function uploadFile(Request $request)
+    {
+        // 判断是否有文件上传
+        if ($request-&gt;hasFile(&#39;file&#39;)) {
+            // 获取文件,file对应的是前端表单上传input的name
+            $file = $request-&gt;file(&#39;file&#39;);
+            // Laravel5.3中多了一个写法
+            // $file = $request-&gt;file;
+
+            // 初始化
+            $disk = QiniuStorage::disk(&#39;qiniu&#39;);
+            // 重命名文件
+            $fileName = md5($file-&gt;getClientOriginalName().time().rand()).&#39;.&#39;.$file-&gt;getClientOriginalExtension();
+
+            // 上传到七牛
+            $bool = $disk-&gt;put(&#39;iwanli/image_&#39;.$fileName,file_get_contents($file-&gt;getRealPath()));
+            // 判断是否上传成功
+            if ($bool) {
+                $path = $disk-&gt;downloadUrl(&#39;iwanli/image_&#39;.$fileName);
+                return &#39;上传成功，图片url:&#39;.$path;
+            }
+            return &#39;上传失败&#39;;
+        }
+        return &#39;没有文件&#39;;
+    }
+}
+</code></pre><p>添加路由：</p>
+<pre><code class="lang-php">// 上传页面视图
+Route::get(&#39;/upload&#39;,function ()
+{
+    return view(&#39;index&#39;);
+});
+
+// form提交到控制器路由
+Route::post(&#39;upload&#39;,&#39;UploadController@uploadFile&#39;);
+</code></pre>
+<p>视图页面(resources\views\index.blade.php):</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;上传图片&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;form method=&quot;post&quot; action=&quot;{{url(&#39;upload&#39;)}}&quot; enctype=&quot;multipart/form-data&quot;&gt;
+        {{csrf_field()}}
+        &lt;input type=&quot;file&quot; name=&quot;file&quot;&gt;
+        &lt;button type=&quot;submit&quot;&gt;上传图片&lt;/button&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>OK，刷新页面就能看到上传后的url地址了。这里只是演示一个最简单的实例，路由定义、视图样式、及逻辑层处理大家按照自己的项目来就行了，Enjoy it。</p>
+<p>源码地址：<a href="https://github.com/lanceWan/laraqiniu-demo">https://github.com/lanceWan/laraqiniu-demo</a></p>
+
+        
     </div>
-        <div class="masonry-grid-item col-1">
-        <article class="blog-grid">
-            <div class="blog-grid-box-shadow">
-                <div class="blog-grid-content">
-                    <h2 class="blog-grid-title-md"><a href="http://www.iwanli.me/article/56">iDashboard-基于Laravel5.3的后台管理</a></h2>
-                                            <div class="starImg">
-                            <a href="http://www.iwanli.me/article/56"><img class="img-responsive margin-b-10" src="picture/451a50846d6e9cfb62ab31775f9040e2.png" alt="iDashboard-基于Laravel5.3的后台管理"></a>
-                        </div>
-                                        <p>经过几天的奋斗，Laravel5.3的后台管理基本框架已经完成，代码大量优化，设计模式更改。博客改版计划也要开始了~</p>
-                </div>
-                <div class="blog-grid-supplemental">
-                    <span class="blog-grid-supplemental-title">
-                        <a class="blog-grid-supplemental-category" href="http://www.iwanli.me/cate/4"><i class="fa fa-leaf"></i> Laravel</a>
-                         -  <i class="fa fa-clock-o"></i> 2016-11-07 12:28:32
-                    </span>
-                    <span class="blog-grid-supplemental-title pull-right">
-                        <i class="fa fa-eye"></i> 505
-                    </span>
-                </div>
+    <!-- End Blog Grid Content -->
+    <div class="divider-v1"><div class="divider-v1-element"><i class="divider-v1-icon fa fa-skyatlas"></i></div></div>
+
+    <!-- Blog Comment -->
+    <div class="bg-color-white margin-b-30">
+        <div class="blog-single-post-content">
+            <div class="heading-v1 text-center margin-b-50">
+                <h2 class="heading-v1-title">Leave a comment</h2>
             </div>
-        </article>
-    </div>
-        <div class="masonry-grid-item col-1">
-        <article class="blog-grid">
-            <div class="blog-grid-box-shadow">
-                <div class="blog-grid-content">
-                    <h2 class="blog-grid-title-md"><a href="http://www.iwanli.me/article/55">27-Laravel实战之权限控制</a></h2>
-                                        <p><embed height="600" width="100%" quality="high" allowfullscreen="true" type="application/x-shockwave-flash" src="flash/miniloader.swf" flashvars="aid=6947770&page=1" pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash"></embed>
-本节介绍逻辑层的权限控制，前端页面虽然判断权限，但别人拿到路由一样可以进行操作。这样很不安全，所以我们要在逻辑层再加上一层判断~</p>
-                </div>
-                <div class="blog-grid-supplemental">
-                    <span class="blog-grid-supplemental-title">
-                        <a class="blog-grid-supplemental-category" href="http://www.iwanli.me/cate/4"><i class="fa fa-leaf"></i> Laravel</a>
-                         -  <i class="fa fa-clock-o"></i> 2016-11-02 07:21:20
-                    </span>
-                    <span class="blog-grid-supplemental-title pull-right">
-                        <i class="fa fa-eye"></i> 189
-                    </span>
-                </div>
-            </div>
-        </article>
-    </div>
-        <div class="masonry-grid-item col-1">
-        <article class="blog-grid">
-            <div class="blog-grid-box-shadow">
-                <div class="blog-grid-content">
-                    <h2 class="blog-grid-title-md"><a href="http://www.iwanli.me/article/54">26-Laravel实战之databases权限列表</a></h2>
-                                        <p><embed height="600" width="100%" quality="high" allowfullscreen="true" type="application/x-shockwave-flash" src="flash/miniloader.swf" flashvars="aid=6924206&page=1" pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash"></embed></p>
-                </div>
-                <div class="blog-grid-supplemental">
-                    <span class="blog-grid-supplemental-title">
-                        <a class="blog-grid-supplemental-category" href="http://www.iwanli.me/cate/4"><i class="fa fa-leaf"></i> Laravel</a>
-                         -  <i class="fa fa-clock-o"></i> 2016-11-01 07:29:59
-                    </span>
-                    <span class="blog-grid-supplemental-title pull-right">
-                        <i class="fa fa-eye"></i> 124
-                    </span>
-                </div>
-            </div>
-        </article>
-    </div>
-        <div class="masonry-grid-item col-1">
-        <article class="blog-grid">
-            <div class="blog-grid-box-shadow">
-                <div class="blog-grid-content">
-                    <h2 class="blog-grid-title-md"><a href="http://www.iwanli.me/article/53">25-Laravel实战之添加权限功能</a></h2>
-                                        <p><embed height="600" width="100%" quality="high" allowfullscreen="true" type="application/x-shockwave-flash" src="flash/miniloader.swf" flashvars="aid=6758232&page=1" pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash"></embed>
-<p>之前作死，公司项目一直加班，每周都是凌晨，没有时间给大家更新~现在慢慢补回来，一个月没有讲，有点生疏，望大家见谅</p></p>
-                </div>
-                <div class="blog-grid-supplemental">
-                    <span class="blog-grid-supplemental-title">
-                        <a class="blog-grid-supplemental-category" href="http://www.iwanli.me/cate/4"><i class="fa fa-leaf"></i> Laravel</a>
-                         -  <i class="fa fa-clock-o"></i> 2016-10-21 12:32:38
-                    </span>
-                    <span class="blog-grid-supplemental-title pull-right">
-                        <i class="fa fa-eye"></i> 165
-                    </span>
-                </div>
-            </div>
-        </article>
-    </div>
-        <div class="masonry-grid-item col-1">
-        <article class="blog-grid">
-            <div class="blog-grid-box-shadow">
-                <div class="blog-grid-content">
-                    <h2 class="blog-grid-title-md"><a href="http://www.iwanli.me/article/52">24-Laravel实战之权限管理及datatables简介</a></h2>
-                                        <p><embed height="600" width="100%" quality="high" allowfullscreen="true" type="application/x-shockwave-flash" src="flash/miniloader.swf" flashvars="aid=6250333&page=1" pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash"></embed>
-<p>耽搁了这么长时间，进度跟上来~</p></p>
-                </div>
-                <div class="blog-grid-supplemental">
-                    <span class="blog-grid-supplemental-title">
-                        <a class="blog-grid-supplemental-category" href="http://www.iwanli.me/cate/4"><i class="fa fa-leaf"></i> Laravel</a>
-                         -  <i class="fa fa-clock-o"></i> 2016-09-12 13:54:33
-                    </span>
-                    <span class="blog-grid-supplemental-title pull-right">
-                        <i class="fa fa-eye"></i> 524
-                    </span>
-                </div>
-            </div>
-        </article>
-    </div>
+            <div id="SOHUCS" sid="57"></div>
+            <div id="cyQing" role="cylabs" data-use="qing"></div>
+            <script charset="utf-8" type="text/javascript" src="js/changyan.js" ></script>
+            <script type="text/javascript">
+                window.changyan.api.config({
+                    appid: 'cysrvzsyE',
+                    conf: ''
+                });
+            </script>   
         </div>
-<div class="paginations-v2 text-center"><ul class="paginations-v2-list"><li class="previous  disabled"><span aria-label="previous"><span aria-hidden="true">Prev</span></span></li> <li class="active"><span>1</span></li><li><a href="http://www.iwanli.me?page=2#pageScroll">2</a></li><li><a href="http://www.iwanli.me?page=3#pageScroll">3</a></li><li><a href="http://www.iwanli.me?page=4#pageScroll">4</a></li><li><a href="http://www.iwanli.me?page=5#pageScroll">5</a></li><li><a href="http://www.iwanli.me?page=6#pageScroll">6</a></li><li><a href="http://www.iwanli.me?page=7#pageScroll">7</a></li><li><a href="http://www.iwanli.me?page=8#pageScroll">8</a></li><li><a href="http://www.iwanli.me?page=9#pageScroll">9</a></li><li><a href="http://www.iwanli.me?page=10#pageScroll">10</a></li> <li class="next"><a href="http://www.iwanli.me?page=2#pageScroll" aria-label="Next"><span aria-hidden="true">Next</span></a></li></ul></div>
+    </div>
+</article>
                 </div>
                 <div class="col-md-3">
-                                        <div class="blog-sidebar margin-b-30">
+                    <div class="blog-sidebar margin-b-30">
+    <div class="blog-sidebar-content scrollbar">
+        <h3 class="portfolio-item-subitem-title">Published</h3>
+        <p class="portfolio-item-subitem-paragraph">2016-11-08 13:00:39</p>
+        <hr>
+        <h3 class="portfolio-item-subitem-title">Categories</h3>
+        <a class="portfolio-item-category" href="http://www.iwanli.me/cate/57">前端</a>
+        <hr>
+        <h3 class="portfolio-item-subitem-title">Tags</h3>
+        <ul class="list-unstyled tags-v2 margin-b-20">
+                                    <li><a href="http://www.iwanli.me/tag/1">Laravel</a></li>
+                                </ul>
+        <hr>
+        <h3 class="portfolio-item-subitem-title">Share</h3>
+        <ul class="list-inline">
+            <li class="theme-icons-wrap"><a href="#"><i class="theme-icons theme-icons-base-hover theme-icons-xs radius-circle fa fa-facebook"></i></a></li>
+            <li class="theme-icons-wrap"><a href="#"><i class="theme-icons theme-icons-base-hover theme-icons-xs radius-circle fa fa-twitter"></i></a></li>
+            <li class="theme-icons-wrap"><a href="#"><i class="theme-icons theme-icons-base-hover theme-icons-xs radius-circle fa fa-pinterest-p"></i></a></li>
+            <li class="theme-icons-wrap"><a href="#"><i class="theme-icons theme-icons-base-hover theme-icons-xs radius-circle fa fa-dribbble"></i></a></li>
+            <li class="theme-icons-wrap"><a href="#"><i class="theme-icons theme-icons-base-hover theme-icons-xs radius-circle fa fa-instagram"></i></a></li>
+        </ul>
+    </div>
+</div>
+                    <div class="blog-sidebar margin-b-30">
                         <div class="blog-sidebar-heading">
                             <i class="blog-sidebar-heading-icon fa fa-fire"></i>
                             <h4 class="blog-sidebar-heading-title">热门文章</h4>
@@ -379,7 +411,8 @@
                             </ul>
                         </div>
                     </div>
-                                    </div>
+                    
+                </div>
             </div>
         </div>
     <footer id="footer" class="footer">
@@ -423,6 +456,10 @@
 <script type="text/javascript" src="js/jquery.animsition.min.js"></script>
 <script type="text/javascript" src="js/jquery.wow.min.js"></script>
 <script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="js/highlight.pack.js"></script>
+<script>
+    hljs.initHighlighting();
+</script>
 <script>
 var _hmt = _hmt || [];
 (function() {
