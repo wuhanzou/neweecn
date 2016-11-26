@@ -1,16 +1,62 @@
+<!-- 底部
+================================================== -->
+			<footer id="footer" class="footer">
+            	<div class="container">
+                	<div class="row margin-b-50">
+                    	<div class="col-sm-6 sm-margin-b-30">
+                        	<div class="footer-address">
+                            	<h3 class="footer-title">About Me</h3>
+                            	<p class="footer-address-text">如果你有什么疑问或者交流，下面联系方式可以找到晚黎~.~</p>
+                            	<p class="footer-address-text">QQ:709344897</p>
+                            	<a class="footer-address-link" href="mailto:709344897@qq.com">709344897@qq.com</a>
+                        	</div>
+                    	</div>
+                    	<div class="col-sm-6">
+                        	<div class="footer-testimonials">
+                            	<div class="footer-testimonials-quote">
+                                	<p>当你的才华还撑不起你的野心时，就应该静下心来学习,当你的能力还驾驭不了你的目标时，就应该沉下心来历练.</p>
+                            	</div>
+                            	<span class="footer-testimonials-author">&#8212; iWanli</span>
+                        	</div>
+                    	</div>
+                	</div>
 
-    <!-- 底部
-    ================================================== -->
-    <footer class="footer">
-      <div class="container">
-          <p> 本站由 <strong><a href="http://www.onethink.cn" target="_blank">OneThink</a></strong> 强力驱动</p>
-      </div>
-    </footer>
+                	<ul class="list-inline footer-copyright">
+                    	<li class="footer-copyright-item">Copyright &#169; 2016 iWanli. All Rights Reserved.</li>
+                	</ul>
+            	</div>
+        	</footer>
+    	</div>
+    <block name="footer"></block>
+    <a href="javascript:void(0);" class="js-back-to-top back-to-top-theme"></a>
+    <!--[if lt IE 9]>
+    <script src="__JS__/html5shiv.js"></script>
+    <script src="__JS__/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="__STATIC__/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="__JS__/jquery.migrate.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/bootstrap/js/bootstrap.min.js"></script>
 
-<include file="Public/var"/>
-<block name="script"></block> <!-- 用于加载js代码 -->
-<!-- 页面footer钩子，一般用于加载插件JS文件和JS代码 -->
-{:hook('pageFooter', 'widget')}
-<div class="hidden"><!-- 用于加载统计代码等隐藏元素 -->
-	<block name="hidden"></block>
-</div>
+    <script type="text/javascript" src="__JS__/jquery.back-to-top.js"></script>
+    <script type="text/javascript" src="__JS__/jquery.smooth-scroll.js"></script>
+    <script type="text/javascript" src="__JS__/jquery.animsition.min.js"></script>
+    <script type="text/javascript" src="__JS__/jquery.wow.min.js"></script>
+    <script type="text/javascript" src="__JS__/app.js"></script>
+    <include file="Public/var"/>
+    <block name="loadScript"></block> <!-- 用于加载页面单独js代码 -->
+    <!-- 页面footer钩子，一般用于加载插件JS文件和JS代码 -->
+    {:hook('pageFooter', 'widget')}
+    <div class="hidden"><!-- 用于加载统计代码等隐藏元素 -->
+    	<block name="hidden">
+    		<!-- 百度统计代码 -->
+    		<script>
+    		var _hmt = _hmt || [];
+    		(function() {
+    		  var hm = document.createElement("script");
+    		  hm.src = "//hm.baidu.com/hm.js?8ffac5b2edb9acc821670955fe4f53cc";
+    		  var s = document.getElementsByTagName("script")[0]; 
+    		  s.parentNode.insertBefore(hm, s);
+    		})();
+    		</script>
+    	</block>
+    </div>

@@ -5,3 +5,5 @@
 
 	mysql新版的date字段不支持默认0000-00-00这样的值了，而要最小填写1970-01-01,或者改成char类型
 
+	tp框架如果设置了'MODULE_DENY_LIST'   => array('Common','User','Admin','Install'), // 禁止访问的模块列表,下面必须加上'MODULE_ALLOW_LIST'  => array('Home','Admin'),// 允许访问的模块列表,否则会报错，无法加载模块
+

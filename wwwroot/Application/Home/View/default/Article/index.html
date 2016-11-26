@@ -1,0 +1,377 @@
+﻿<extend name="Base/common"/>
+<block name="loadCss">
+    <link href="__CSS__/monokai-sublime.css" rel="stylesheet" type="text/css"/>
+</block>
+<block name="header">
+    <section class="breadcrumbs-v5 bg-position-fixed breadcrumbs-v5-bg-img-v4">
+        <div class="container">
+            <h2 class="breadcrumbs-v5-title">I am Wanli</h2>
+            <span class="breadcrumbs-v5-subtitle">I am a slow walker, but I never walk backwards...</span>
+        </div>
+    </section>
+    <section class="breadcrumbs-v1">
+        <div class="container">
+            <h2 class="breadcrumbs-v1-title">Article</h2>
+            <ol class="breadcrumbs-v1-links">
+                <li><a href="http://www.iwanli.me"><i class="fa fa-home"></i> Home</a></li>
+                <li><a href="http://www.iwanli.me/cate/1"><i class="fa fa-navicon"></i> 前端</a></li>
+                <li class="active">Laravel上传图片到七牛</li>
+            </ol>
+        </div>
+    </section>
+</div>    
+</block>
+<block name="body">
+    <div class="bg-color-sky-light">
+        <div class="content-md container">
+            <div class="row">
+                <div class="col-md-9 md-margin-b-30">
+                    <article class="blog-grid margin-b-30">
+                        <!-- Blog Grid Content -->
+                        <div class="blog-grid-content">
+                            <h2 class="blog-grid-title-lg">Laravel上传图片到七牛</h2>
+                            <img class="img-responsive margin-b-20" src="picture/dec920cbf2a3fe7a490459e97451ba8f.png" alt="">
+                            <blockquote>
+                                <p>本文主介绍上传图片到七牛，并获取七牛的图片路径。主要细讲七牛的配置问题，发现很多小伙伴都对七牛的配置不是很熟悉~</p>
+                            </blockquote>
+                            <h2 id="h2-u65B0u5EFAu9879u76EE">
+                                <a name="新建项目" class="reference-link"></a><span class="header-link octicon octicon-link"></span>新建项目</h2>
+                            <p>这里直接用一个新的Laravel5.3的项目进行演示，其他版本都是一样不会影响功能，顶多是路由位置不一样而已。已有项目的小伙伴可直接跳过次段。</p>
+                            <pre>
+                                <code># 新建项目
+                                    laravel new laravel-qiniu
+                                    cd laravel-qiniu
+                                </code>
+                            </pre>
+                            <h2 id="h2--laravel-"><a name="安装Laravel七牛扩展包" class="reference-link"></a><span class="header-link octicon octicon-link"></span>安装Laravel七牛扩展包</h2>
+                            <p>过Composer安装：</p>
+                            <pre>
+                                <code class="lang-php">composer  require zgldh/qiniu-laravel-storage
+                                </code>
+                            </pre>
+                            <p>然后在  <code>config/app.php</code> 中注册服务提供者：</p>
+                            <pre>
+                                <code class="lang-php">zgldh\QiniuStorage\QiniuFilesystemServiceProvider::class
+                                </code>
+                            </pre>
+                            <p>接下来在  <code>config/filesystems.php</code> 里的disks中新增七牛配置：</p>
+                            <pre>
+                                <code class="lang-php">&#39;qiniu&#39; =&gt; [
+                                    &#39;driver&#39;  =&gt; &#39;qiniu&#39;,
+                                    &#39;domains&#39; =&gt; [
+                                        &#39;default&#39;   =&gt; &#39;xxxxx&#39;, //你的七牛域名
+                                        &#39;https&#39;     =&gt; &#39;xxxxx&#39;,         //你的HTTPS域名
+                                        &#39;custom&#39;    =&gt; &#39;xxxxx&#39;,     //你的自定义域名
+                                     ],
+                                    &#39;access_key&#39;=&gt; &#39;&#39;,  //AccessKey
+                                    &#39;secret_key&#39;=&gt; &#39;&#39;,  //SecretKey
+                                    &#39;bucket&#39;    =&gt; &#39;&#39;,  //Bucket名字
+                                    &#39;notify_url&#39;=&gt; &#39;&#39;,  //持久化处理回调地址
+                                ],
+                                </code>
+                            </pre>
+                            <p>OK，扩展包的安装就暂时介绍到这里，接下来我们要去七牛注册一个账号并且将上面的配置完善。</p>
+                            <h2 id="h2-u4E03u725Bu8D26u53F7u6CE8u518Cu53CAu914Du7F6E"><a name="七牛账号注册及配置" class="reference-link"></a><span class="header-link octicon octicon-link"></span>七牛账号注册及配置</h2><p>先去七牛注册一个账号，点击官网的注册会让我们选择用户类型，这里我就选择个人用户。</p>
+                            <p><img src="picture/31f65056c3a0ef0675d674765244c1b4.jpg" alt=""></p>
+                            <p>接下来按照流程来进项注册就OK了，我就不演示给大家看了。由于我的手机号已经注册了，这里只能给大家看一下我已经添加了存储对象的实例了。</p>
+                            <p><img src="picture/1b197cd99b6be0122d9fe387b77520f8.jpg" alt=""></p>
+                            <p><img src="picture/68bfb991d0a7c394c761b87a6a0f53fd.jpg" alt=""></p>
+                            <p>OK ，简单的用图给大家看一下七牛的默认域名及自定义域名在哪里看。下面给大家看一下七牛的秘钥的位置：</p>
+                            <p><img src="picture/0a1b7f09a5617fe330369578172be74a.jpg" alt=""></p>
+                            <p>点击秘钥管理，就可与看到个人七牛的秘钥了：</p>
+                            <p><img src="picture/1959dbdbf6ccf8dfbf2a4002198c3211.jpg" alt=""></p>
+                            <h2 id="h2--laravel-"><a name="七牛在Laravel中的配置" class="reference-link"></a><span class="header-link octicon octicon-link"></span>七牛在Laravel中的配置</h2><p>上面已经介绍相关的配置在哪儿，现在我们要将这些配置在Laravel中使用：</p>
+                            <p><img src="picture/qq截图20161109172958.jpg" alt=""></p>
+                            <h2 id="h2-u4E0Au4F20u56FEu7247u5230u4E03u725B"><a name="上传图片到七牛" class="reference-link"></a><span class="header-link octicon octicon-link"></span>上传图片到七牛</h2><p>简单用一个示例来演示前端上传图片到后台后，用七牛的扩展上传图片</p>
+                            <p>先在 <code>resources\views</code> 下新建 <code>index.blade.php</code> 视图</p>
+                            <pre><code class="lang-php">&lt;!DOCTYPE html&gt;
+                            &lt;html&gt;
+                            &lt;head&gt;
+                                &lt;title&gt;上传图片&lt;/title&gt;
+                            &lt;/head&gt;
+                            &lt;body&gt;
+                                &lt;form method=&quot;post&quot; action=&quot;&quot; enctype=&quot;multipart/form-data&quot;&gt;
+                                    &lt;input type=&quot;file&quot; name=&quot;file&quot;&gt;
+                                    &lt;button type=&quot;submit&quot;&gt;上传图片&lt;/button&gt;
+                                &lt;/form&gt;
+                            &lt;/body&gt;
+                            &lt;/html&gt;
+                            </code></pre>
+                            <p>页面代码简单，没有任何样式（请原谅我偷懒），新建 <code>UplaodController</code> 上传文件控制器：</p>
+                            <pre><code>php artisan make:controller UploadController
+                            </code></pre><p>实现上传方法：</p>
+                            <pre><code>&lt;?php
+                            namespace App\Http\Controllers;
+                            use Illuminate\Http\Request;
+                            use zgldh\QiniuStorage\QiniuStorage;
+                            class UploadController extends Controller
+                            {
+                                /**
+                                 * 上传文件到七牛
+                                 * @author 晚黎
+                                 * @date   2016-11-09T16:58:37+0800
+                                 * @param  Request                  $request [description]
+                                 * @return [type]                            [description]
+                                 */
+                                public function uploadFile(Request $request)
+                                {
+                                    // 判断是否有文件上传
+                                    if ($request-&gt;hasFile(&#39;file&#39;)) {
+                                        // 获取文件,file对应的是前端表单上传input的name
+                                        $file = $request-&gt;file(&#39;file&#39;);
+                                        // Laravel5.3中多了一个写法
+                                        // $file = $request-&gt;file;
+
+                                        // 初始化
+                                        $disk = QiniuStorage::disk(&#39;qiniu&#39;);
+                                        // 重命名文件
+                                        $fileName = md5($file-&gt;getClientOriginalName().time().rand()).&#39;.&#39;.$file-&gt;getClientOriginalExtension();
+
+                                        // 上传到七牛
+                                        $bool = $disk-&gt;put(&#39;iwanli/image_&#39;.$fileName,file_get_contents($file-&gt;getRealPath()));
+                                        // 判断是否上传成功
+                                        if ($bool) {
+                                            $path = $disk-&gt;downloadUrl(&#39;iwanli/image_&#39;.$fileName);
+                                            return &#39;上传成功，图片url:&#39;.$path;
+                                        }
+                                        return &#39;上传失败&#39;;
+                                    }
+                                    return &#39;没有文件&#39;;
+                                }
+                            }
+                            </code></pre><p>添加路由：</p>
+                            <pre><code class="lang-php">// 上传页面视图
+                            Route::get(&#39;/upload&#39;,function ()
+                            {
+                                return view(&#39;index&#39;);
+                            });
+
+                            // form提交到控制器路由
+                            Route::post(&#39;upload&#39;,&#39;UploadController@uploadFile&#39;);
+                            </code></pre>
+                            <p>视图页面(resources\views\index.blade.php):</p>
+                            <pre><code>&lt;!DOCTYPE html&gt;
+                            &lt;html&gt;
+                            &lt;head&gt;
+                                &lt;title&gt;上传图片&lt;/title&gt;
+                            &lt;/head&gt;
+                            &lt;body&gt;
+                                &lt;form method=&quot;post&quot; action=&quot;{{url(&#39;upload&#39;)}}&quot; enctype=&quot;multipart/form-data&quot;&gt;
+                                    {{csrf_field()}}
+                                    &lt;input type=&quot;file&quot; name=&quot;file&quot;&gt;
+                                    &lt;button type=&quot;submit&quot;&gt;上传图片&lt;/button&gt;
+                                &lt;/form&gt;
+                            &lt;/body&gt;
+                            &lt;/html&gt;
+                            </code></pre><p>OK，刷新页面就能看到上传后的url地址了。这里只是演示一个最简单的实例，路由定义、视图样式、及逻辑层处理大家按照自己的项目来就行了，Enjoy it。</p>
+                            <p>源码地址：<a href="https://github.com/lanceWan/laraqiniu-demo">https://github.com/lanceWan/laraqiniu-demo</a></p>   
+                        </div>
+                        <!-- End Blog Grid Content -->
+                        <div class="divider-v1"><div class="divider-v1-element"><i class="divider-v1-icon fa fa-skyatlas"></i></div></div>
+
+                        <!-- Blog Comment -->
+                        <div class="bg-color-white margin-b-30">
+                            <div class="blog-single-post-content">
+                                <div class="heading-v1 text-center margin-b-50">
+                                    <h2 class="heading-v1-title">Leave a comment</h2>
+                                </div>
+                                <div id="SOHUCS" sid="57"></div>
+                                <div id="cyQing" role="cylabs" data-use="qing"></div>
+                                <script charset="utf-8" type="text/javascript" src="__JS__/changyan.js" ></script>
+                                <script type="text/javascript">
+                                    window.changyan.api.config({
+                                        appid: 'cysrvzsyE',
+                                        conf: ''
+                                    });
+                                </script>   
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                        <div class="col-md-3">
+                            <div class="blog-sidebar margin-b-30">
+                                <div class="blog-sidebar-content scrollbar">
+                                    <h3 class="portfolio-item-subitem-title">Published</h3>
+                                    <p class="portfolio-item-subitem-paragraph">2016-11-08 13:00:39</p>
+                                    <hr>
+                                    <h3 class="portfolio-item-subitem-title">Categories</h3>
+                                    <a class="portfolio-item-category" href="http://www.iwanli.me/cate/57">前端</a>
+                                    <hr>
+                                    <h3 class="portfolio-item-subitem-title">Tags</h3>
+                                    <ul class="list-unstyled tags-v2 margin-b-20">
+                                        <li><a href="http://www.iwanli.me/tag/1">Laravel</a></li>
+                                    </ul>
+                                    <hr>
+                                    <h3 class="portfolio-item-subitem-title">Share</h3>
+                                    <ul class="list-inline">
+                                        <li class="theme-icons-wrap"><a href="#"><i class="theme-icons theme-icons-base-hover theme-icons-xs radius-circle fa fa-facebook"></i></a></li>
+                                        <li class="theme-icons-wrap"><a href="#"><i class="theme-icons theme-icons-base-hover theme-icons-xs radius-circle fa fa-twitter"></i></a></li>
+                                        <li class="theme-icons-wrap"><a href="#"><i class="theme-icons theme-icons-base-hover theme-icons-xs radius-circle fa fa-pinterest-p"></i></a></li>
+                                        <li class="theme-icons-wrap"><a href="#"><i class="theme-icons theme-icons-base-hover theme-icons-xs radius-circle fa fa-dribbble"></i></a></li>
+                                        <li class="theme-icons-wrap"><a href="#"><i class="theme-icons theme-icons-base-hover theme-icons-xs radius-circle fa fa-instagram"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="blog-sidebar margin-b-30">
+                                <div class="blog-sidebar-heading">
+                                    <i class="blog-sidebar-heading-icon fa fa-fire"></i>
+                                    <h4 class="blog-sidebar-heading-title">热门文章</h4>
+                                </div>
+                                <div class="blog-sidebar-content scrollbar">
+                                    <ul class="timeline-v2">
+                                                                                                        <li class="timeline-v2-list-item">
+                                            <i class="timeline-v2-badge-icon radius-circle fa fa-calendar"></i>
+                                            <small class="timeline-v2-news-date">2016-07-14 11:52:08</small>
+                                            <h5 class="timeline-v2-news-title"><a href="http://www.iwanli.me/article/25">Laravel视频教程专题【2016/11/4 第27节】</a></h5>
+                                        </li>
+                                                                        <li class="timeline-v2-list-item">
+                                            <i class="timeline-v2-badge-icon radius-circle fa fa-calendar"></i>
+                                            <small class="timeline-v2-news-date">2016-09-07 14:02:48</small>
+                                            <h5 class="timeline-v2-news-title"><a href="http://www.iwanli.me/article/51">Laravel5.3多用户表登录</a></h5>
+                                        </li>
+                                                                        <li class="timeline-v2-list-item">
+                                            <i class="timeline-v2-badge-icon radius-circle fa fa-calendar"></i>
+                                            <small class="timeline-v2-news-date">2016-05-23 09:14:57</small>
+                                            <h5 class="timeline-v2-news-title"><a href="http://www.iwanli.me/article/1">laravel5分页Pagination及扩展</a></h5>
+                                        </li>
+                                                                        <li class="timeline-v2-list-item">
+                                            <i class="timeline-v2-badge-icon radius-circle fa fa-calendar"></i>
+                                            <small class="timeline-v2-news-date">2016-08-16 12:48:43</small>
+                                            <h5 class="timeline-v2-news-title"><a href="http://www.iwanli.me/article/42">Laravel5.2中多用户表登录</a></h5>
+                                        </li>
+                                                                        <li class="timeline-v2-list-item">
+                                            <i class="timeline-v2-badge-icon radius-circle fa fa-calendar"></i>
+                                            <small class="timeline-v2-news-date">2016-05-26 05:23:30</small>
+                                            <h5 class="timeline-v2-news-title"><a href="http://www.iwanli.me/article/3">Laravel5使用Captcha扩展包生成验证码</a></h5>
+                                        </li>
+                                                                        <li class="timeline-v2-list-item">
+                                            <i class="timeline-v2-badge-icon radius-circle fa fa-calendar"></i>
+                                            <small class="timeline-v2-news-date">2016-05-25 05:34:44</small>
+                                            <h5 class="timeline-v2-news-title"><a href="http://www.iwanli.me/article/2">Laravel5 自定义登录字段</a></h5>
+                                        </li>
+                                                                        <li class="timeline-v2-list-item">
+                                            <i class="timeline-v2-badge-icon radius-circle fa fa-calendar"></i>
+                                            <small class="timeline-v2-news-date">2016-07-04 09:23:24</small>
+                                            <h5 class="timeline-v2-news-title"><a href="http://www.iwanli.me/article/16">01-Laravel5.2视频教程之简介</a></h5>
+                                        </li>
+                                                                        <li class="timeline-v2-list-item">
+                                            <i class="timeline-v2-badge-icon radius-circle fa fa-calendar"></i>
+                                            <small class="timeline-v2-news-date">2016-07-15 12:45:13</small>
+                                            <h5 class="timeline-v2-news-title"><a href="http://www.iwanli.me/article/26">07-Laravel5.2视频教程之Entrust安装</a></h5>
+                                        </li>
+                                                                        <li class="timeline-v2-list-item">
+                                            <i class="timeline-v2-badge-icon radius-circle fa fa-calendar"></i>
+                                            <small class="timeline-v2-news-date">2016-06-12 22:36:04</small>
+                                            <h5 class="timeline-v2-news-title"><a href="http://www.iwanli.me/article/11">Laravel自定义错误页面</a></h5>
+                                        </li>
+                                                                        <li class="timeline-v2-list-item">
+                                            <i class="timeline-v2-badge-icon radius-circle fa fa-calendar"></i>
+                                            <small class="timeline-v2-news-date">2016-07-06 12:28:58</small>
+                                            <h5 class="timeline-v2-news-title"><a href="http://www.iwanli.me/article/19">04-Laravel5.2视频教程之默认登录注册页面</a></h5>
+                                        </li>
+                                                                                                        <li class="clearfix" style="float: none;"></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="blog-sidebar margin-b-30">
+                                <div class="blog-sidebar-heading">
+                                    <i class="blog-sidebar-heading-icon fa fa-paperclip"></i>
+                                    <h4 class="blog-sidebar-heading-title">标签</h4>
+                                </div>
+                                <div class="blog-sidebar-content">
+                                    <ul class="list-inline blog-sidebar-tags">
+                                                                                                        <li><a class="radius-50" href="http://www.iwanli.me/tag/1">Laravel</a></li>
+                                                                        <li><a class="radius-50" href="http://www.iwanli.me/tag/2">分页</a></li>
+                                                                        <li><a class="radius-50" href="http://www.iwanli.me/tag/3">自定义</a></li>
+                                                                        <li><a class="radius-50" href="http://www.iwanli.me/tag/4">PHP</a></li>
+                                                                        <li><a class="radius-50" href="http://www.iwanli.me/tag/5">登录</a></li>
+                                                                        <li><a class="radius-50" href="http://www.iwanli.me/tag/6">验证码</a></li>
+                                                                        <li><a class="radius-50" href="http://www.iwanli.me/tag/7">安装</a></li>
+                                                                        <li><a class="radius-50" href="http://www.iwanli.me/tag/8">Redis</a></li>
+                                                                        <li><a class="radius-50" href="http://www.iwanli.me/tag/9">字符串</a></li>
+                                                                        <li><a class="radius-50" href="http://www.iwanli.me/tag/10">笔记</a></li>
+                                                                        <li><a class="radius-50" href="http://www.iwanli.me/tag/11">列表</a></li>
+                                                                        <li><a class="radius-50" href="http://www.iwanli.me/tag/12">集合</a></li>
+                                                                        <li><a class="radius-50" href="http://www.iwanli.me/tag/13">哈希</a></li>
+                                                                        <li><a class="radius-50" href="http://www.iwanli.me/tag/14">散列</a></li>
+                                                                        <li><a class="radius-50" href="http://www.iwanli.me/tag/15">视图</a></li>
+                                                                        <li><a class="radius-50" href="http://www.iwanli.me/tag/16">数据共享</a></li>
+                                                                        <li><a class="radius-50" href="http://www.iwanli.me/tag/17">时间</a></li>
+                                                                        <li><a class="radius-50" href="http://www.iwanli.me/tag/18">有序集合</a></li>
+                                                                        <li><a class="radius-50" href="http://www.iwanli.me/tag/19">异常</a></li>
+                                                                        <li><a class="radius-50" href="http://www.iwanli.me/tag/20">复制</a></li>
+                                                                                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="blog-sidebar">
+                                <div class="blog-sidebar-heading">
+                                    <i class="blog-sidebar-heading-icon fa fa-paperclip"></i>
+                                    <h4 class="blog-sidebar-heading-title">友情链接</h4>
+                                </div>
+                                <div class="blog-sidebar-content">
+                                    <ul class="list-unstyled lists-base">
+                                        <li><i class="lists-item-element fa fa-angle-right"></i> <a target="_black" href="https://phphub.org/">PHPHub(推荐)</a></li>
+                                        <li><i class="lists-item-element fa fa-angle-right"></i> <a target="_black" href="http://laravelacademy.org/">Laravel学院(推荐)</a></li>
+                                        <li><i class="lists-item-element fa fa-angle-right"></i> <a target="_black" href="http://aabvip.com/">明日复明日</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- <extend name="Public/label"/> -->
+                <!-- <block name="label">
+                    <div class="blog-sidebar margin-b-30">
+                        <div class="blog-sidebar-content scrollbar">
+                            <h3 class="portfolio-item-subitem-title">Published</h3>
+                            <p class="portfolio-item-subitem-paragraph">2016-11-08 13:00:39</p>
+                            <hr>
+                            <h3 class="portfolio-item-subitem-title">Categories</h3>
+                            <a class="portfolio-item-category" href="http://www.iwanli.me/cate/57">前端</a>
+                            <hr>
+                            <h3 class="portfolio-item-subitem-title">Tags</h3>
+                            <ul class="list-unstyled tags-v2 margin-b-20">
+                                                        <li><a href="http://www.iwanli.me/tag/1">Laravel</a></li>
+                                                    </ul>
+                            <hr>
+                            <h3 class="portfolio-item-subitem-title">Share</h3>
+                            <ul class="list-inline">
+                                <li class="theme-icons-wrap"><a href="#"><i class="theme-icons theme-icons-base-hover theme-icons-xs radius-circle fa fa-facebook"></i></a></li>
+                                <li class="theme-icons-wrap"><a href="#"><i class="theme-icons theme-icons-base-hover theme-icons-xs radius-circle fa fa-twitter"></i></a></li>
+                                <li class="theme-icons-wrap"><a href="#"><i class="theme-icons theme-icons-base-hover theme-icons-xs radius-circle fa fa-pinterest-p"></i></a></li>
+                                <li class="theme-icons-wrap"><a href="#"><i class="theme-icons theme-icons-base-hover theme-icons-xs radius-circle fa fa-dribbble"></i></a></li>
+                                <li class="theme-icons-wrap"><a href="#"><i class="theme-icons theme-icons-base-hover theme-icons-xs radius-circle fa fa-instagram"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </block> -->
+            </div>
+        </div>
+    </div>
+</block>
+<block name="loadScript">
+    <script type="text/javascript" src="__JS__/highlight.pack.js"></script>
+    <script>
+        hljs.initHighlighting();
+    </script>
+</block>
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
