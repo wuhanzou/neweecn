@@ -1235,6 +1235,9 @@ a:focus {
   .divider-v1 .divider-v1-element, .divider-v3 .divider-v3-element {
     position: relative;
     display: inline-block; }
+    .divider-v3 .divider-v3-element  .glyphicon{
+      font-size:30px;
+    }
     .divider-v1 .divider-v1-element:before, .divider-v3 .divider-v3-element:before, .divider-v1 .divider-v1-element:after, .divider-v3 .divider-v3-element:after {
       position: absolute;
       top: 50%;
@@ -3368,10 +3371,20 @@ a:focus {
   transition-property: all;
   transition-timing-function: cubic-bezier(0.7, 1, 0.7, 1); }
   .back-to-top-theme:after {
-    font-family: FontAwesome;
+    border: 10px solid transparent;
+    border-bottom: 10px solid #fff;
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: 0;
+    right: 8px;
+    content: ' ';
+
+  /*  font-family: FontAwesome;
     color: #fff;
     text-align: center;
-    content: "\f106"; }
+    content: "\f106";*/
+     }
   .back-to-top-theme:hover {
     background: #00bcd4;
     transition-duration: 300ms;
