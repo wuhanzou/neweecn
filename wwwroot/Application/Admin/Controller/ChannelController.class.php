@@ -59,14 +59,12 @@ class ChannelController extends AdminController {
                 $parent = M('Channel')->where(array('id'=>$pid))->field('title')->find();
                 $this->assign('parent', $parent);
             }
-
             $this->assign('pid', $pid);
             $this->assign('info',null);
             $this->meta_title = '新增导航';
             $this->display('edit');
         }
     }
-
     /**
      * 编辑频道
      * @author 麦当苗儿 <zuojiazi@vip.qq.com>

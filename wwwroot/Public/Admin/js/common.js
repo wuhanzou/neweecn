@@ -106,7 +106,7 @@
                 query = form.find('input,select,textarea').serialize();
             }
             $(that).addClass('disabled').attr('autocomplete','off').prop('disabled',true);
-            $.post(target,query).success(function(data){
+            $.post(target,query).always(function(data){
                 if (data.status==1) {
                     if (data.url) {
                         updateAlert(data.info + ' 页面即将自动跳转~','alert-success');

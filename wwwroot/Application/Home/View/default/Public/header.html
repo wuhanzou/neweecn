@@ -39,7 +39,23 @@
                 <div class="collapse navbar-collapse nav-collapse">
                     <div class="menu-container">
                         <ul class="nav navbar-nav">
-                            <li class="nav-item">
+                            <think:nav name="nav">
+                                <eq name="nav.pid" value="0">
+                                    <li class="nav-item">
+                                        <a class="nav-item-child radius-3" href="{$nav.url|get_nav_url}" target="<eq name='nav.target' value='1'>_blank<else/>_self</eq>">
+                                            {$nav.title}
+                                        </a>
+                                    </li>
+                                </eq>
+                                <neq name="nav.pid" value="0">
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown-menu-item">
+                                            <a class="dropdown-menu-item-child" href="{$nav.url|get_nav_url}" target="<eq name='nav.target' value='1'>_blank<else/>_self</eq>">{$nav.title}</a>
+                                        </li>
+                                    </ul>
+                                </neq>
+                            </think:nav>
+                            <!-- <li class="nav-item">
                                 <a class="nav-item-child radius-3" href="http://www.iwanli.me">
                                     Home
                                 </a>
@@ -88,7 +104,7 @@
                                 <a class="nav-item-child radius-3" href="http://www.iwanli.me/article/25">
                                     Laravel 视频教程
                                 </a>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                 </div>

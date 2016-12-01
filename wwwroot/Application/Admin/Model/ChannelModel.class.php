@@ -18,7 +18,7 @@ use Think\Model;
 class ChannelModel extends Model {
     protected $_validate = array(
         array('title', 'require', '标题不能为空', self::MUST_VALIDATE , 'regex', self::MODEL_BOTH),
-        array('url', 'require', 'URL不能为空', self::MUST_VALIDATE , 'regex', self::MODEL_BOTH),
+        // array('url', 'require', 'URL不能为空', self::MUST_VALIDATE , 'regex', self::MODEL_BOTH),
     );
 
     protected $_auto = array(
