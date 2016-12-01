@@ -15,7 +15,7 @@ class Think extends TagLib{
     // 标签定义
     protected $tags   =  array(
         // 标签定义： attr 属性列表 close 是否闭合（0 或者1 默认1） alias 标签别名 level 嵌套层次
-        'nav'       =>  array('attr' => 'field,name', 'close' => 1), //获取导航
+        'nav'       =>  array('attr' => 'field,tree,name', 'close' => 1), //获取导航
         'query'     =>  array('attr'=>'sql,result','close'=>0),
         'cate'      =>  array('attr'=>'id,name,limit,pid,result','level'=>3),
         'article'   =>  array('attr'=>'id,name,cate,pid,pos,type,limit,where,order,field,result','level'=>3),
@@ -31,7 +31,7 @@ class Think extends TagLib{
         $parse  = $parse   = '<?php ';
         $parse .= '$__NAV__ = M(\'Channel\')->field('.$field.')->where("status=1")->order("sort")->select();';
         if($tree){
-            $parse .= '$__NAV__ = list_to_tree($__NAV__, "id", "pid", "_");';
+            $parse .= '$__NAV__ = list_to_tree($__NAV__, "id", "pid", "_child");';
         }
         $parse .= '?><volist name="__NAV__" id="'. $tag['name'] .'">';
         $parse .= $content;

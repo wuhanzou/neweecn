@@ -30,7 +30,7 @@
                         </div>
                     </div>
                     <div class="navbar-logo">
-                        <a class="navbar-logo-wrap" href="http://www.iwanli.me">
+                        <a class="navbar-logo-wrap" href="/">
                             <img class="navbar-logo-img navbar-logo-img-white" src="__IMG__/picture/logo-default-white.png" alt="Ark">
                             <img class="navbar-logo-img navbar-logo-img-dark" src="__IMG__/picture/logo-default.png" alt="Ark">
                         </a>
@@ -39,72 +39,24 @@
                 <div class="collapse navbar-collapse nav-collapse">
                     <div class="menu-container">
                         <ul class="nav navbar-nav">
-                            <think:nav name="nav">
+                            <think:nav tree="true" name="nav">
                                 <eq name="nav.pid" value="0">
                                     <li class="nav-item">
                                         <a class="nav-item-child radius-3" href="{$nav.url|get_nav_url}" target="<eq name='nav.target' value='1'>_blank<else/>_self</eq>">
                                             {$nav.title}
                                         </a>
+                                        <notempty name="nav._child">
+                                            <volist name="nav._child" id="vo">
+                                                <ul class="dropdown-menu">
+                                                    <li class="dropdown-menu-item">
+                                                        <a class="dropdown-menu-item-child" href="{$vo.url|get_nav_url}" target="<eq name='vo.target' value='1'>_blank<else/>_self</eq>">{$vo.title}</a>
+                                                    </li>
+                                                </ul>
+                                            </volist>
+                                        </notempty>
                                     </li>
                                 </eq>
-                                <neq name="nav.pid" value="0">
-                                    <ul class="dropdown-menu">
-                                        <li class="dropdown-menu-item">
-                                            <a class="dropdown-menu-item-child" href="{$nav.url|get_nav_url}" target="<eq name='nav.target' value='1'>_blank<else/>_self</eq>">{$nav.title}</a>
-                                        </li>
-                                    </ul>
-                                </neq>
                             </think:nav>
-                            <!-- <li class="nav-item">
-                                <a class="nav-item-child radius-3" href="http://www.iwanli.me">
-                                    Home
-                                </a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-item-child dropdown-toggle radius-3" href="javascript:void(0)" onclick="return false" data-toggle="dropdown">
-                                    前端
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="dropdown-menu-item">
-                                        <a class="dropdown-menu-item-child" href="http://www.iwanli.me/cate/7"> Chrome扩展</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-item-child dropdown-toggle radius-3" href="javascript:void(0)" onclick="return false" data-toggle="dropdown">
-                                    PHP
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="dropdown-menu-item">
-                                        <a class="dropdown-menu-item-child" href="http://www.iwanli.me/cate/4">Laravel</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-item-child radius-3" href="http://www.iwanli.me/cate/3">
-                                    移动端
-                                </a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-item-child dropdown-toggle radius-3" href="javascript:void(0)" onclick="return false" data-toggle="dropdown">
-                                    数据库
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="dropdown-menu-item">
-                                        <a class="dropdown-menu-item-child" href="http://www.iwanli.me/cate/6">Redis</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-item-child radius-3" href="http://www.iwanli.me/cate/9">
-                                    随笔
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-item-child radius-3" href="http://www.iwanli.me/article/25">
-                                    Laravel 视频教程
-                                </a>
-                            </li> -->
                         </ul>
                     </div>
                 </div>
