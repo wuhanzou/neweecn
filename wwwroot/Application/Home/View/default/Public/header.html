@@ -42,14 +42,14 @@
                             <think:nav tree="true" name="nav">
                                 <eq name="nav.pid" value="0">
                                     <li class="nav-item">
-                                        <a class="nav-item-child radius-3" href="{$nav.url|get_nav_url}" target="<eq name='nav.target' value='1'>_blank<else/>_self</eq>">
+                                        <a class="nav-item-child radius-3" href="<empty name='nav.url'>javascript:;<else />{$nav.url|get_nav_url}</empty>" target="<eq name='nav.target' value='1'>_blank<else/>_self</eq>">
                                             {$nav.title}
                                         </a>
                                         <notempty name="nav._child">
                                             <volist name="nav._child" id="vo">
                                                 <ul class="dropdown-menu">
                                                     <li class="dropdown-menu-item">
-                                                        <a class="dropdown-menu-item-child" href="{$vo.url|get_nav_url}" target="<eq name='vo.target' value='1'>_blank<else/>_self</eq>">{$vo.title}</a>
+                                                        <a class="dropdown-menu-item-child" href="<empty name='vo.url'>javascript:;<else />{$vo.url|get_nav_url}</empty>" target="<eq name='vo.target' value='1'>_blank<else/>_self</eq>">{$vo.title}</a>
                                                     </li>
                                                 </ul>
                                             </volist>
