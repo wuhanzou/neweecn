@@ -1,5 +1,5 @@
             <!-- 正文 -->
-            <article:list name="list" category="$category['id']" child="true">
+            <article:list name="list" category="$category['id']" child="true" row="1">
             <div class="masonry-grid-item col-1">
                 <article class="blog-grid">
                     <div class="blog-grid-box-shadow">
@@ -9,7 +9,7 @@
                             </h2>
                             <div class="starImg">
                                 <a href="{:U('Article/detail?id='.$list['id'])}">
-                                    <img class="img-responsive margin-b-10" src="picture/dec920cbf2a3fe7a490459e97451ba8f.png" alt="Laravel上传图片到七牛">
+                                    <img class="img-responsive margin-b-10" src="{:get_cover($list['cover_id'], $field = path)}" alt="{$list.cover_alt}">
                                 </a>
                             </div>
                             <p>{$list.description}</p>
