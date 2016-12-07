@@ -182,16 +182,16 @@ class DocumentModel extends Model{
     }
 
     /**
-     * 获取段落列表
+     * 获取1目录,2主题,3段落列表
      * @param  integer $id    文档ID
      * @param  integer $page  显示页码
      * @param  boolean $field 查询字段
      * @param  boolean $logic 是否查询模型数据
      * @return array
-     */
-    public function part($id, $page = 1, $field = true, $logic = true){
-        $map  = array('status' => 1, 'pid' => $id, 'type' => 3);
-        $info = $this->field($field)->where($map)->page($page, 10)->order('id')->select();
+     */   
+    public function part($id, $page = 1, $type=3,  $count =10, $field = true, $logic = true){
+        $map  = array('status' => 1, 'pid' => $id, 'type' => $type);
+        $info = $this->field($field)->where($map)->page($page, $count )->order('id')->select();
         if(!$info) {
             $this->error = '该文档没有段落！';
             return false;

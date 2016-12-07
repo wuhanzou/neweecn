@@ -16,12 +16,13 @@ class Think extends TagLib{
     protected $tags   =  array(
         // 标签定义： attr 属性列表 close 是否闭合（0 或者1 默认1） alias 标签别名 level 嵌套层次
         'nav'       =>  array('attr' => 'field,tree,name', 'close' => 1), //获取导航
-        'query'     =>  array('attr'=>'sql,result','close'=>0),
-        'cate'      =>  array('attr'=>'id,name,limit,pid,result','level'=>3),
-        'article'   =>  array('attr'=>'id,name,cate,pid,pos,type,limit,where,order,field,result','level'=>3),
-        'value'     =>  array('attr'=>'name,table,where,type,field,filter','alias'=>'max,min,avg,sum,count','close'=>0),
-        'data'      =>  array('attr'=>'name,field,limit,order,where,join,group,having,table,result,gc','level'=>2),
-        'datalist'  =>  array('attr'=>'name,field,limit,order,where,table,join,having,group,result,count,key,mod,gc','level'=>3),
+        'query'     =>  array('attr'=>'sql,result','close'=>0),   // 自定义sql查询
+        'cate'      =>  array('attr'=>'id,name,limit,pid,result','level'=>3), // 通过id,name,pid获取category表分类信息
+        'article'   =>  array('attr'=>'id,name,cate,pid,pos,type,limit,where,order,field,result','level'=>3), //联表查询document文档基础表和document_article文章扩展表的文章的所有信息
+
+        'value'     =>  array('attr'=>'name,table,where,type,field,filter','alias'=>'max,min,avg,sum,count','close'=>0),  // 获取字段值 包括统计数据getField count max min avg sum
+        'data'      =>  array('attr'=>'name,field,limit,order,where,join,group,having,table,result,gc','level'=>2), ////查询数据，支持多种查询table指 定操作的数据表。where,order,join,group通常用于结合合计函数，根据一个或多个列对结果集进行分组。having用于配合group方法完成从分组的结果中筛选（通常是聚合条件）数 据。field主要目的是标识要返回或者操作的字段，可以用于查询和写入操作。
+        'datalist'  =>  array('attr'=>'name,field,limit,order,where,table,join,having,group,result,count,key,mod,gc','level'=>3),  //查询数据，获取数据表中的多行记录（以及关联数据）.支持多种查询table指 定操作的数据表。where,order,join,group通常用于结合合计函数，根据一个或多个列对结果集进行分组。having用于配合group方法完成从分组的结果中筛选（通常是聚合条件）数 据。field主要目的是标识要返回或者操作的字段，可以用于查询和写入操作。
         );
 
     /* 导航列表 */
@@ -39,7 +40,7 @@ class Think extends TagLib{
         return $parse;
     }
 
-    // sql查询
+    // 自定义sql查询
     public function _query($tag,$content) {
         $sql       =    $tag['sql'];
         $result    =    !empty($tag['result'])?$tag['result']:'result';
@@ -49,7 +50,7 @@ class Think extends TagLib{
         return $parseStr;
     }
 
-    // 获取字段值 包括统计数据
+    // 获取字段值 包括统计数据getField count max min avg sum
     // type 包括 getField count max min avg sum
     public function _value($tag,$content,$type='getField'){
         $name   =   !empty($tag['name'])?$tag['name']:'Document';
@@ -82,7 +83,7 @@ class Think extends TagLib{
     public function _avg($attr,$content){
         return $this->_value($attr,$content,'avg');
     }
-
+    //查询数据，读取数据表中的一行数据（或者关联数据）.支持多种查询table指 定操作的数据表。where,order,join,group通常用于结合合计函数，根据一个或多个列对结果集进行分组。having用于配合group方法完成从分组的结果中筛选（通常是聚合条件）数 据。field主要目的是标识要返回或者操作的字段，可以用于查询和写入操作。
     public function _data($tag,$content){
         $name       =   !empty($tag['name'])?$tag['name']:'Document';
         $result     =   !empty($tag['result'])?$tag['result']:'article';
@@ -115,7 +116,7 @@ class Think extends TagLib{
         }
         return $parseStr;
     }
-
+     //查询数据，获取数据表中的多行记录（以及关联数据）.支持多种查询table指 定操作的数据表。where,order,join,group通常用于结合合计函数，根据一个或多个列对结果集进行分组。having用于配合group方法完成从分组的结果中筛选（通常是聚合条件）数 据。field主要目的是标识要返回或者操作的字段，可以用于查询和写入操作。
     public function _datalist($tag,$content) {
         $name       =   !empty($tag['name'])?$tag['name']:'Document';
         $result     =   !empty($tag['result'])?$tag['result']:'article';
@@ -159,7 +160,7 @@ class Think extends TagLib{
         return $parseStr;
     }
 
-    // 获取分类信息
+    // 通过id,name,pid获取category表分类信息
     public function _cate($tag,$content){
         $result      =  !empty($tag['result'])?$tag['result']:'cate';
         if(!empty($tag['id'])) {
@@ -185,7 +186,7 @@ class Think extends TagLib{
         $parseStr .= "<?php endif;?>";
         return $parseStr;
     }
-
+     //联表查询document文档基础表和document_article文章扩展表的文章的所有信息
     public function _article($tag,$content){
         $result      =  !empty($tag['result'])?$tag['result']:'article';
         $name	=	!empty($tag['name'])?$tag['name']:'Article';

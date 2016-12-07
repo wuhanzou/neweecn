@@ -17,7 +17,7 @@ class Article extends TagLib{
      * @var array
      */
     protected $tags   =  array(
-        'partlist' => array('attr' => 'id,field,page,name', 'close' => 1), //段落列表
+        'partlist' => array('attr' => 'id,field,page,type,count,name', 'close' => 1), //根据pid=id，type(1目录,2主题,3段落),还可以根据当前的$_GET['p']分页获取lime条数据
         'partpage' => array('attr' => 'id,listrow', 'close' => 0), //段落分页
         'prev'     => array('attr' => 'name,info', 'close' => 1), //获取上一篇文章信息
         'next'     => array('attr' => 'name,info', 'close' => 1), //获取下一篇文章信息
@@ -117,23 +117,30 @@ class Article extends TagLib{
         return $parse;
     }
 
-    /* 段落列表 */
+    //根据pid=id，type(1目录,2主题,3段落),还可以根据当前的$_GET['p']分页获取lime条数据
     public function _partlist($tag, $content){
         $id     = $tag['id'];
         $field  = $tag['field'];
         $name   = $tag['name'];
+        if ( isset($tag['type']) ) {
+            $type = $tag['type'];
+        }else{
+            $type = 3;
+        }
+         if ( isset($tag['count']) ) {
+            $count = $tag['count'];
+        }else{
+            $count = 10;
+        }
         if ( isset($tag['listrow']) ) {
             $listrow = $tag['listrow'];
         }else{
-            $listrow = 10;
+            $listrow = true;
         }
         $parse  = '<?php ';
-        $parse .= '$__PARTLIST__ = D(\'Document\')->part(' . $id . ',  !empty($_GET["p"])?$_GET["p"]:1, \'' . $field . '\','. $listrow .');';
-        $parse .= ' ?>';
-        $parse .= '<?php $page=(!empty($_GET["p"])?$_GET["p"]:1)-1; ?>';
-        $parse .= '<volist name="__PARTLIST__" id="'. $name .'">';
-        $parse .= $content;
-        $parse .= '</volist>';
+        $parse .= '$__PARTLIST__ = D(\'Document\')->part(' . $id . ',  !empty($_GET["p"])?$_GET["p"]:1,' . $type . ',' . $count . ', \'' . $field . '\','. $listrow .');';
+        $parse .= 'dump($__PARTLIST__ );?>';
+       
         return $parse;
     }
 }
