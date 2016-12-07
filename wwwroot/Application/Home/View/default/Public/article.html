@@ -5,10 +5,10 @@
                     <div class="blog-grid-box-shadow">
                         <div class="blog-grid-content">
                             <h2 class="blog-grid-title-md">
-                                <a href="{:U('Article/detail?id='.$list['id'])}">{$list.title}</a>
+                                <a href="{:U('Article/index?id='.$list['id'])}">{$list.title}</a>
                             </h2>
                             <div class="starImg">
-                                <a href="{:U('Article/detail?id='.$list['id'])}">
+                                <a href="{:U('Article/index?id='.$list['id'])}">
                                     <img class="img-responsive margin-b-10" src="{:get_cover($list['cover_id'], $field = path)}" alt="{$list.cover_alt}">
                                 </a>
                             </div>
@@ -16,7 +16,7 @@
                         </div>
                         <div class="blog-grid-supplemental">
                             <span class="blog-grid-supplemental-title">
-                                <a class="blog-grid-supplemental-category" href="{:U('Article/lists?category='.get_category_name($list['category_id']))}"><i class="glyphicon glyphicon-leaf"></i> {$list.category_id|get_category_title}</a>
+                                <a class="blog-grid-supplemental-category" href="{:U('Article/index?category='.get_category_name($list['category_id']))}"><i class="glyphicon glyphicon-leaf"></i> {$list.category_id|get_category_title}</a>
                                  -  <i class="glyphicon glyphicon-time"></i> {$list.create_time|date='Y-m-d H:i',###}
                             </span>
                             <span class="blog-grid-supplemental-title pull-right">

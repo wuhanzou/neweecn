@@ -43,7 +43,34 @@
             <div class="row">
                 <div class="col-md-9 md-margin-b-30">
                     <div class="masonry-grid">
-                        <include file="Public/article"/>
+                        <article:position name="pos" pos="4" limit="2" cate="null" >
+                        <div class="masonry-grid-item col-1">
+                            <article class="blog-grid">
+                                <div class="blog-grid-box-shadow">
+                                    <div class="blog-grid-content">
+                                        <h2 class="blog-grid-title-md">
+                                            <a href="{:U('Article/index?id='.$pos['id'])}">{$pos.title}</a>
+                                        </h2>
+                                        <div class="starImg">
+                                            <a href="{:U('Article/index?id='.$pos['id'])}">
+                                                <img class="img-responsive margin-b-10" src="{:get_cover($pos['cover_id'], $field = path)}" alt="{$pos.cover_alt}">
+                                            </a>
+                                        </div>
+                                        <p>{$pos.description}</p>
+                                    </div>
+                                    <div class="blog-grid-supplemental">
+                                        <span class="blog-grid-supplemental-title">
+                                            <a class="blog-grid-supplemental-category" href="{:U('Article/index?category='.get_category_name($pos['category_id']))}"><i class="glyphicon glyphicon-leaf"></i> {$pos.category_id|get_category_title}</a>
+                                             -  <i class="glyphicon glyphicon-time"></i> {$pos.create_time|date='Y-m-d H:i',###}
+                                        </span>
+                                        <span class="blog-grid-supplemental-title pull-right">
+                                            <i class="glyphicon glyphicon-eye-open"></i> {$pos.view}
+                                        </span>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                        </article:position>
                     </div>
                     <include file="Public/page"/> 
                 </div>

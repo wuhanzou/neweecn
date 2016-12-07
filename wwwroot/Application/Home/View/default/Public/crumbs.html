@@ -1,11 +1,17 @@
 <!-- 面包屑 -->
 <section class="breadcrumbs-v1">
     <div class="container">
-        <h2 class="breadcrumbs-v1-title">Article</h2>
+        <h2 class="breadcrumbs-v1-title">{$info.title}</h2>
         <ol class="breadcrumbs-v1-links">
-            <li><a href="http://www.iwanli.me"><i class="glyphicon glyphicon-home"></i> Home</a></li>
-            <li><a href="http://www.iwanli.me/cate/1"><i class="glyphicon glyphicon-align-justify"></i> 前端</a></li>
-            <li class="active">Laravel上传图片到七牛</li>
+            <li><a href="/"><i class="glyphicon glyphicon-home"></i> Home</a></li>
+            <empty name="info._">
+            <li class="active">{$info.title}</li>
+            <else /> 
+            <li><a href="{:U('index',array('category'=>$info['name']))}"><i class="glyphicon glyphicon-align-justify"></i>{$info.title}</a></li>
+			<volist name="info._" id="vot">
+			<li class="active">{$vot.title}</li>
+			</volist> 
+            </empty>                    
         </ol>
     </div>
 </section>

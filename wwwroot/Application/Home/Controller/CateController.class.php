@@ -20,6 +20,7 @@ class CateController extends HomeController {
 		$category = $this->category();
 		//频道页只显示模板，默认不读取任何内容
 		//内容可以通过模板标签自行定制
+		$this->Crumbs($category['id']);  //获取面包屑
 		/* 模板赋值并渲染模板 */
 		$this->assign('category', $category);
 		$this->display($category['template_index']);

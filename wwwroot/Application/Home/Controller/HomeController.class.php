@@ -30,5 +30,10 @@ class HomeController extends Controller {
             $this->error('站点已经关闭，请稍后访问~');
         }
     }
+    /*获取栏目分类的所有信息,用于制作面包屑,关键字,网站描述等*/
+    public function Crumbs($id){
+        $category = D('Category')->getTree($id);
+        $this->assign('info',$category); //获取指定栏目下的所有子栏目(包括当前栏目) 
+    }
 
 }

@@ -17,7 +17,7 @@ use OT\DataDictionary;
 class IndexController extends HomeController {
 
 	//首页
-    public function index(){      
+    public function index(){    
         $this->display();
     }
 
