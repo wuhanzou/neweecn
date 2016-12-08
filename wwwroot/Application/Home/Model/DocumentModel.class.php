@@ -182,21 +182,22 @@ class DocumentModel extends Model{
     }
 
     /**
-     * 获取1目录,2主题,3段落列表
+     * 获取文章列表
      * @param  integer $id    文档ID
      * @param  integer $page  显示页码
+     * @param  integer $type  1目录,2主题,3段落
+     * @param  integer $count 显示列表数量
      * @param  boolean $field 查询字段
-     * @param  boolean $logic 是否查询模型数据
+     * @param  boolean $logic 是否查询模型数据,默认true,不获取全部信息,只获取列表信息
      * @return array
      */   
     public function part($id, $page = 1, $type=3,  $count =10, $field = true, $logic = true){
         $map  = array('status' => 1, 'pid' => $id, 'type' => $type);
-        $info = $this->field($field)->where($map)->page($page, $count )->order('id')->select();
+        $info = $this->field($field)->where($map)->page($page, $count)->order('id')->select();
         if(!$info) {
-            $this->error = '该文档没有段落！';
+            $this->error = '该文档没有文章！';
             return false;
         }
-
         /* 不获取内容详情 */
         if(!$logic){
             return $info;
@@ -221,12 +222,13 @@ class DocumentModel extends Model{
     }
 
     /**
-     * 获取指定文档的段落总数
-     * @param  number $id 段落ID
+     * 获取指定文档的文章总数
+     * @param  number $id 文章ID
+     * @param  number $type (1目录,2主题,3段落)
      * @return number     总数
      */
-    public function partCount($id){
-        $map = array('status' => 1, 'pid' => $id, 'type' => 3);
+    public function partCount($id, $type = 3){
+        $map = array('status' => 1, 'pid' => $id, 'type' => $type);
         return $this->where($map)->count('id');
     }
 

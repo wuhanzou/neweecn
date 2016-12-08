@@ -38,16 +38,18 @@ function get_list_count($category, $status = 1){
 }
 
 /**
- * 获取段落总数
- * @param  string $id 文档ID
- * @return integer    段落总数
+ * 获取文章总数
+ * @param  string $id   文档ID
+ * @param  string $type 1目录,2主题,3段落
+ * @return integer      段落总数
  * @author 麦当苗儿 <zuojiazi@vip.qq.com>
  */
-function get_part_count($id){
+function get_part_count($id, $type = 3){
     static $count;
     if(!isset($count[$id])){
         $count[$id] = D('Document')->partCount($id);
     }
+    // echo  M()->getLastSql();
     return $count[$id];
 }
 

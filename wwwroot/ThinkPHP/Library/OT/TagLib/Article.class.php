@@ -17,7 +17,7 @@ class Article extends TagLib{
      * @var array
      */
     protected $tags   =  array(
-        'partlist' => array('attr' => 'id,field,page,type,count,name', 'close' => 1), //根据pid=id，type(1目录,2主题,3段落),还可以根据当前的$_GET['p']分页获取lime条数据
+        'partlist' => array('attr' => 'id,field,page,type,count,name', 'close' => 1), //获取列表信息。根据pid=id，type(1目录,2主题,3段落),还可以根据当前的$_GET['p']分页获取lime条数据,$count每页显示多少条,listrow是否获取列表全部内容详情，默认true,不获取全部信息，只获取列表信息
         'partpage' => array('attr' => 'id,listrow', 'close' => 0), //段落分页
         'prev'     => array('attr' => 'name,info', 'close' => 1), //获取上一篇文章信息
         'next'     => array('attr' => 'name,info', 'close' => 1), //获取下一篇文章信息
@@ -102,9 +102,19 @@ class Article extends TagLib{
         return $parse;
     }
 
-    /* 段落数据分页 */
+    /**
+     * 文章数据分页
+     * @param  number $id       文章所属id
+     * @param  number $type     文章类型(1目录,2主题,3段落)
+     * @param  number $listrow  每页显示条数
+    */
     public function _partpage($tag){
         $id      = $tag['id'];
+        if ( isset($tag['type']) ) {
+            $type = $tag['type'];
+        }else{
+            $type = 3;
+        }
         if ( isset($tag['listrow']) ) {
             $listrow = $tag['listrow'];
         }else{
@@ -117,7 +127,7 @@ class Article extends TagLib{
         return $parse;
     }
 
-    //根据pid=id，type(1目录,2主题,3段落),还可以根据当前的$_GET['p']分页获取lime条数据
+    //获取列表信息。根据pid=id，type(1目录,2主题,3段落),还可以根据当前的$_GET['p']分页获取lime条数据,$count每页显示多少条,listrow是否获取列表全部内容详情，默认true,不获取全部信息，只获取列表信息
     public function _partlist($tag, $content){
         $id     = $tag['id'];
         $field  = $tag['field'];
@@ -127,7 +137,7 @@ class Article extends TagLib{
         }else{
             $type = 3;
         }
-         if ( isset($tag['count']) ) {
+        if ( isset($tag['count']) ) {
             $count = $tag['count'];
         }else{
             $count = 10;
@@ -138,9 +148,12 @@ class Article extends TagLib{
             $listrow = true;
         }
         $parse  = '<?php ';
-        $parse .= '$__PARTLIST__ = D(\'Document\')->part(' . $id . ',  !empty($_GET["p"])?$_GET["p"]:1,' . $type . ',' . $count . ', \'' . $field . '\','. $listrow .');';
-        $parse .= 'dump($__PARTLIST__ );?>';
-       
+        $parse .= '$__PARTLIST__ = D(\'Document\')->part(' . $id . ',  !empty($_GET["p"])?$_GET["p"]:1,' . $type . ',' . $count . ', ' . $field . ','. $listrow .');';
+        $parse .= '?>';
+        $parse .= '<?php $page=(!empty($_GET["p"])?$_GET["p"]:1)-1; ?>';
+        $parse .= '<volist name="__PARTLIST__" id="'. $name .'">';
+        $parse .= $content;
+        $parse .= '</volist>';
         return $parse;
     }
 }
