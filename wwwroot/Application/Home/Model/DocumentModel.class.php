@@ -223,7 +223,7 @@ class DocumentModel extends Model{
 
     /**
      * 获取指定文档的文章总数
-     * @param  number $id 文章ID
+     * @param  number $id 文章id,pid=id
      * @param  number $type (1目录,2主题,3段落)
      * @return number     总数
      */

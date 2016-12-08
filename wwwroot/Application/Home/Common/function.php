@@ -47,9 +47,8 @@ function get_list_count($category, $status = 1){
 function get_part_count($id, $type = 3){
     static $count;
     if(!isset($count[$id])){
-        $count[$id] = D('Document')->partCount($id);
+        $count[$id] = D('Document')->partCount($id, $type);
     }
-    // echo  M()->getLastSql();
     return $count[$id];
 }
 

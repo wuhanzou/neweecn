@@ -18,10 +18,10 @@ class Article extends TagLib{
      */
     protected $tags   =  array(
         'partlist' => array('attr' => 'id,field,page,type,count,name', 'close' => 1), //获取列表信息。根据pid=id，type(1目录,2主题,3段落),还可以根据当前的$_GET['p']分页获取lime条数据,$count每页显示多少条,listrow是否获取列表全部内容详情，默认true,不获取全部信息，只获取列表信息
-        'partpage' => array('attr' => 'id,listrow', 'close' => 0), //段落分页
+        'partpage' => array('attr' => 'id,listrow', 'close' => 0), //文章数据分页,需要指定type类型
         'prev'     => array('attr' => 'name,info', 'close' => 1), //获取上一篇文章信息
         'next'     => array('attr' => 'name,info', 'close' => 1), //获取下一篇文章信息
-        'page'     => array('attr' => 'cate,listrow', 'close' => 0), //列表分页
+        'page'     => array('attr' => 'cate,listrow', 'close' => 0), //列表分页,不需要指定type类型
         'position' => array('attr' => 'pos,cate,limit,filed,name', 'close' => 1), //获取推荐位列表
         'list'     => array('attr' => 'name,category,child,page,row,field', 'close' => 1), //获取指定分类列表
     );
@@ -45,7 +45,14 @@ class Article extends TagLib{
         return $parse;
     }
 
-    /* 推荐位列表 */
+    /**
+     * 推荐位列表
+     * @param  string  $name      
+     * @param  number  $pos      推荐位 1-列表推荐，2-频道页推荐，4-首页推荐
+     * @param  number  $cate    $cate=$category_id分类ID
+     * @param  number  $limit    列表显示行数
+     * @param  boolean $filed    查询字段,true显示查询所有字段，也可指定相应字段
+     */
     public function _position($tag, $content){
         $pos    = $tag['pos'];
         $cate   = $tag['cate'];
@@ -65,7 +72,11 @@ class Article extends TagLib{
         return $parse;
     }
 
-    /* 列表数据分页 */
+    /* *
+    * 列表数据分页 
+    * @param  number  $cate   $cate=category_id分类id,这里不需要指定type类型
+    * @param  number $listrow  每页显示条数
+    */
     public function _page($tag){
         $cate    = $tag['cate'];
         $listrow = $tag['listrow'];
@@ -76,12 +87,16 @@ class Article extends TagLib{
         return $parse;
     }
 
-    /* 获取下一篇文章信息 */
+    /** 
+        *获取下一篇文章信息
+        * @param  string $name 
+        * @param  array $info 当前文档信息
+    */
     public function _next($tag, $content){
         $name   = $tag['name'];
         $info   = $tag['info'];
         $parse  = '<?php ';
-        $parse .= '$' . $name . ' = D(\'Document\')->next($' . $info . ');';
+        $parse .= '$' . $name . ' = D(\'Document\')->next(' . $info . ');';
         $parse .= ' ?>';
         $parse .= '<notempty name="' . $name . '">';
         $parse .= $content;
@@ -89,12 +104,16 @@ class Article extends TagLib{
         return $parse;
     }
 
-    /* 获取上一篇文章信息 */
+    /** 
+        *获取上一篇文章信息 
+        * @param  string $name 
+        * @param  array $info 当前文档信息
+    */
     public function _prev($tag, $content){
         $name   = $tag['name'];
         $info   = $tag['info'];
         $parse  = '<?php ';
-        $parse .= '$' . $name . ' = D(\'Document\')->prev($' . $info . ');';
+        $parse .= '$' . $name . ' = D(\'Document\')->prev(' . $info . ');';
         $parse .= ' ?>';
         $parse .= '<notempty name="' . $name . '">';
         $parse .= $content;
@@ -104,7 +123,7 @@ class Article extends TagLib{
 
     /**
      * 文章数据分页
-     * @param  number $id       文章所属id
+     * @param  number $id       文章所属id, pid=id
      * @param  number $type     文章类型(1目录,2主题,3段落)
      * @param  number $listrow  每页显示条数
     */
@@ -120,9 +139,9 @@ class Article extends TagLib{
         }else{
             $listrow = 10;
         }
-        $parse   = '<?php ';
-        $parse  .= '$__PAGE__ = new \Think\Page(get_part_count(' . $id . '), ' . $listrow . ');';
-        $parse  .= 'echo $__PAGE__->show();';
+        $parse   = '<?php';
+        $parse  .= ' $__PAGE__ = new \Think\Page(get_part_count('.$id.','.$type.'),'.$listrow.');';
+        $parse  .= ' echo $__PAGE__->show();';
         $parse  .= ' ?>';
         return $parse;
     }
