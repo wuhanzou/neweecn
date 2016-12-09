@@ -171,7 +171,7 @@ class Think extends TagLib{
             // 获取单个分类
             $parseStr   =  '<?php $'.$result.' = M("Category")->getByName('.$tag['name'].');';
             $parseStr .=  'if($'.$result.'):?>'.$content;
-        }elseif(!empty($tag['pid'])){
+        }elseif(isset($tag['pid'])){
             $key     =   !empty($tag['key'])?$tag['key']:'i';
             $mod    =   isset($tag['mod'])?$tag['mod']:'2';
             $parseStr   =  '<?php $_result = M("Category")->order("sort")->where("display=1 AND status=1 AND pid='.$tag['pid'].'")';

@@ -23,26 +23,9 @@
         </div>
         <div class="blog-sidebar-content">
             <ul class="list-inline blog-sidebar-tags">
-                <li><a class="radius-50" href="http://www.iwanli.me/tag/1">Laravel</a></li>
-                <li><a class="radius-50" href="http://www.iwanli.me/tag/2">分页</a></li>
-                <li><a class="radius-50" href="http://www.iwanli.me/tag/3">自定义</a></li>
-                <li><a class="radius-50" href="http://www.iwanli.me/tag/4">PHP</a></li>
-                <li><a class="radius-50" href="http://www.iwanli.me/tag/5">登录</a></li>
-                <li><a class="radius-50" href="http://www.iwanli.me/tag/6">验证码</a></li>
-                <li><a class="radius-50" href="http://www.iwanli.me/tag/7">安装</a></li>
-                <li><a class="radius-50" href="http://www.iwanli.me/tag/8">Redis</a></li>
-                <li><a class="radius-50" href="http://www.iwanli.me/tag/9">字符串</a></li>
-                <li><a class="radius-50" href="http://www.iwanli.me/tag/10">笔记</a></li>
-                <li><a class="radius-50" href="http://www.iwanli.me/tag/11">列表</a></li>
-                <li><a class="radius-50" href="http://www.iwanli.me/tag/12">集合</a></li>
-                <li><a class="radius-50" href="http://www.iwanli.me/tag/13">哈希</a></li>
-                <li><a class="radius-50" href="http://www.iwanli.me/tag/14">散列</a></li>
-                <li><a class="radius-50" href="http://www.iwanli.me/tag/15">视图</a></li>
-                <li><a class="radius-50" href="http://www.iwanli.me/tag/16">数据共享</a></li>
-                <li><a class="radius-50" href="http://www.iwanli.me/tag/17">时间</a></li>
-                <li><a class="radius-50" href="http://www.iwanli.me/tag/18">有序集合</a></li>
-                <li><a class="radius-50" href="http://www.iwanli.me/tag/19">异常</a></li>
-                <li><a class="radius-50" href="http://www.iwanli.me/tag/20">复制</a></li>
+                <think:cate pid="0" limit="10">
+                <li><a class="radius-50" href="{:U('Tag/index')}">{$cate.keywords}</a></li>    
+                </think:cate>
             </ul>
         </div>
     </div>
@@ -53,9 +36,12 @@
         </div>
         <div class="blog-sidebar-content">
             <ul class="list-unstyled lists-base">
-                <li><i class="lists-item-element glyphicon glyphicon-chevron-right btn-xs btn-default"></i> <a target="_black" href="https://phphub.org/">PHPHub(推荐)</a></li>
-                <li><i class="lists-item-element glyphicon glyphicon-chevron-right btn-xs btn-default"></i> <a target="_black" href="http://laravelacademy.org/">Laravel学院(推荐)</a></li>
-                <li><i class="lists-item-element glyphicon glyphicon-chevron-right btn-xs btn-default"></i> <a target="_black" href="http://aabvip.com/">明日复明日</a></li>
+                <volist name=":C('FRIENDSHIP_LINK')" id="vo">
+                <li>   
+                    <i class="lists-item-element glyphicon glyphicon-chevron-right btn-xs btn-default"></i>
+                    <a target="_black" href="{$key|http_url}">{$vo}</a>
+                </li>
+                </volist>
             </ul>
         </div>
     </div>

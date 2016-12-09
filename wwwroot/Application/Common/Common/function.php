@@ -1016,3 +1016,16 @@ function check_category_model($info){
     $array  =   explode(',', $info['pid'] ? $cate['model_sub'] : $cate['model']);
     return in_array($info['model_id'], $array);
 }
+
+/**
+ * url链接加上http://前缀
+ * @param  string $url 
+ * @return string 返回完整的http://xxx的url    
+ */
+function http_url($url){
+    $str = stristr("http://",$url);
+    if( $str ){
+        return $url;
+    }
+    return 'http://'.$url;
+}
