@@ -17,7 +17,13 @@ use OT\DataDictionary;
 class IndexController extends HomeController {
 
 	//首页
-    public function index(){    
+    public function index(){   
+          //首页文章分类赋值
+         $category = array(
+         	'id' => 0,
+         	'list_row' => C('REPLY_LIST_ROWS'),
+         	);
+        $this->assign('category', $category);
         $this->display();
     }
 

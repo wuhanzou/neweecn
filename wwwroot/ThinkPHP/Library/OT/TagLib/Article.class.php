@@ -29,12 +29,12 @@ class Article extends TagLib{
     public function _list($tag, $content){
         $name   = $tag['name'];
         $cate   = $tag['category'];
-        $child  = empty($tag['child']) ? 'false' : $tag['child'];
+        $child  = empty($tag['child']) ? 'child' : $tag['child'];
         $row    = empty($tag['row'])   ? '10' : $tag['row'];
         $field  = empty($tag['field']) ? 'true' : $tag['field'];
 
         $parse  = '<?php ';
-        $parse .= '$__CATE__ = D(\'Category\')->getChildrenId('.$cate.');';
+        $parse .= '$__CATE__ = D(\'Category\')->getChildrenId('.$cate.','.$child.');';
         $parse .= '$__LIST__ = D(\'Document\')->page(!empty($_GET["p"])?$_GET["p"]:1,'.$row.')->lists(';
         $parse .= '$__CATE__, \'`level` DESC,`id` DESC\', 1,';
         $parse .= $field . ');';

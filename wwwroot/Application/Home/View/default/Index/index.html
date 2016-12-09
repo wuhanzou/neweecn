@@ -43,38 +43,37 @@
             <div class="row">
                 <div class="col-md-9 md-margin-b-30">
                     <div class="masonry-grid">
-                        <article:position name="pos" pos="4" limit="2" cate="null" >
+                        <article:list name="list" category="0" row="C('REPLY_LIST_ROWS')">
                         <div class="masonry-grid-item col-1">
                             <article class="blog-grid">
                                 <div class="blog-grid-box-shadow">
                                     <div class="blog-grid-content">
                                         <h2 class="blog-grid-title-md">
-                                            <a href="{:U('Article/index?id='.$pos['id'])}">{$pos.title}</a>
+                                            <a href="{:U('Article/index?id='.$list['id'])}">{$list.title}</a>
                                         </h2>
                                         <div class="starImg">
-                                            <a href="{:U('Article/index?id='.$pos['id'])}">
-                                                <img class="img-responsive margin-b-10" src="{:get_cover($pos['cover_id'], $field = path)}" alt="{$pos.cover_alt}">
+                                            <a href="{:U('Article/index?id='.$list['id'])}">
+                                                <img class="img-responsive margin-b-10" src="{:get_cover($list['cover_id'], $field = path)}" alt="{$list.cover_alt}">
                                             </a>
                                         </div>
-                                        <p>{$pos.description}</p>
+                                        <p>{$list.description}</p>
                                     </div>
                                     <div class="blog-grid-supplemental">
                                         <span class="blog-grid-supplemental-title">
-                                            <a class="blog-grid-supplemental-category" href="{:U('Article/index?category='.get_category_name($pos['category_id']))}"><i class="glyphicon glyphicon-leaf"></i> {$pos.category_id|get_category_title}</a>
-                                             -  <i class="glyphicon glyphicon-time"></i> {$pos.create_time|date='Y-m-d H:i',###}
+                                            <a class="blog-grid-supplemental-category" href="{:U('Article/index?category='.get_category_name($list['category_id']))}"><i class="glyphicon glyphicon-leaf"></i> {$list.category_id|get_category_title}</a>
+                                             -  <i class="glyphicon glyphicon-time"></i> {$list.create_time|date='Y-m-d H:i',###}
                                         </span>
                                         <span class="blog-grid-supplemental-title pull-right">
-                                            <i class="glyphicon glyphicon-eye-open"></i> {$pos.view}
+                                            <i class="glyphicon glyphicon-eye-open"></i> {$list.view}
                                         </span>
                                     </div>
                                 </div>
                             </article>
                         </div>
-                        </article:position>
+                        </article:list>
                     </div>
                     <include file="Public/page"/> 
                 </div>
-                <!-- 页面右边标签栏 -->
                 <div class="col-md-3">
                     <include file="Public/label"/>
                 </div>

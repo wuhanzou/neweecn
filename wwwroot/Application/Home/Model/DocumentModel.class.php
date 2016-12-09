@@ -304,7 +304,7 @@ class DocumentModel extends Model{
         $map = array('status' => $status, 'pid' => 0);
 
         /* 设置分类 */
-        if(!is_null($category)){
+        if( !is_null($category) && $category !==0  ){
             if(is_numeric($category)){
                 $map['category_id'] = $category;
             } else {
