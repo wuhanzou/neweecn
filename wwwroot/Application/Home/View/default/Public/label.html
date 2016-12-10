@@ -24,7 +24,7 @@
         <div class="blog-sidebar-content">
             <ul class="list-inline blog-sidebar-tags">
                 <think:cate pid="0" limit="10">
-                <li><a class="radius-50" href="{:U('Tag/index')}">{$cate.keywords}</a></li>    
+                <li><a class="radius-50" href="{:U('Cate/index',array('category'=>$cate['id']))}">{$cate.keywords}</a></li>    
                 </think:cate>
             </ul>
         </div>
