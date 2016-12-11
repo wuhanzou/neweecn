@@ -69,3 +69,32 @@ function get_nav_url($url){
     }
     return $url;
 }
+
+/**
+ * 获取参数的所有父级分类
+ * @param int $cid 分类id
+ * @return array 参数分类和父类的信息集合
+ * @author huajie <banhuajie@163.com>
+ */
+function get_parent_category($cid){
+    if(empty($cid)){
+        return false;
+    }
+    $cates  =   M('Category')->where(array('status'=>1))->field('id,title,pid')->order('sort')->select();
+    $child  =   get_category($cid); //获取参数分类的信息
+    $pid    =   $child['pid'];
+    $temp   =   array();
+    $res[]  =   $child;
+    while(true){
+        foreach ($cates as $key=>$cate){
+            if($cate['id'] == $pid){
+                $pid = $cate['pid'];
+                array_unshift($res, $cate); //将父分类插入到数组第一个元素前
+            }
+        }
+        if($pid == 0){
+            break;
+        }
+    }
+    return $res;
+}

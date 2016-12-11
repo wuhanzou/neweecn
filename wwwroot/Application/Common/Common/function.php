@@ -472,7 +472,6 @@ function get_category($id, $field = null){
     if(empty($list)){
         $list = S('sys_category_list');
     }
-
     /* 获取分类名称 */
     if(!isset($list[$id])){
         $cate = M('Category')->find($id);

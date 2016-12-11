@@ -4,12 +4,22 @@
 </block>
 <block name="header">
         <section class="breadcrumbs-v5 bg-position-fixed breadcrumbs-v5-bg-img-v4">
+            <include file="Public/banner"/>
+        </section>
+        <section class="breadcrumbs-v1">
             <div class="container">
-                <h2 class="breadcrumbs-v5-title">I am Wanli</h2>
-                <span class="breadcrumbs-v5-subtitle">I am a slow walker, but I never walk backwards...</span>
+                <h2 class="breadcrumbs-v1-title">{$data.title|msubstr=0,8}</h2>
+                <ol class="breadcrumbs-v1-links">
+                    <li><a href="/"><i class="glyphicon glyphicon-home"></i> Home</a></li>
+                    <notempty name="info">
+                    <volist name="info" id="vo">
+                     <li><a href="{:U('Cate/index',array('category'=>$vo['name']))}"><i class="glyphicon glyphicon-align-justify"></i>{$vo.title}</a></li>   
+                    </volist> 
+                    <li class="active">{$data.title|msubstr=0,4}</li>
+                    </notempty>                    
+                </ol>
             </div>
         </section>
-        <include file="Public/crumbs"/>
     </div>    
 </block>
 <block name="body">
@@ -20,147 +30,21 @@
                     <article class="blog-grid margin-b-30">
                         <!-- Blog Grid Content -->
                         <div class="blog-grid-content">
-                            <h2 class="blog-grid-title-lg">Laravel上传图片到七牛</h2>
-                            <img class="img-responsive margin-b-20" src="picture/dec920cbf2a3fe7a490459e97451ba8f.png" alt="">
+                            <think:article result='article'>                                              
+                            <h2 class="blog-grid-title-lg">{$article.title}</h2>
+                            <notempty name="article.cover_id">
+                            <img class="img-responsive margin-b-20" src="{:get_cover($article['cover_id'], $field = path)}" alt="">
+                            </notempty>
                             <blockquote>
-                                <p>本文主介绍上传图片到七牛，并获取七牛的图片路径。主要细讲七牛的配置问题，发现很多小伙伴都对七牛的配置不是很熟悉~</p>
+                                <p>{$article.description}</p>
                             </blockquote>
-                            <h2 id="h2-u65B0u5EFAu9879u76EE">
-                                <a name="新建项目" class="reference-link"></a><span class="header-link octicon octicon-link"></span>新建项目</h2>
-                            <p>这里直接用一个新的Laravel5.3的项目进行演示，其他版本都是一样不会影响功能，顶多是路由位置不一样而已。已有项目的小伙伴可直接跳过次段。</p>
-                            <pre>
-                                <code># 新建项目
-                                    laravel new laravel-qiniu
-                                    cd laravel-qiniu
-                                </code>
-                            </pre>
-                            <h2 id="h2--laravel-"><a name="安装Laravel七牛扩展包" class="reference-link"></a><span class="header-link octicon octicon-link"></span>安装Laravel七牛扩展包</h2>
-                            <p>过Composer安装：</p>
-                            <pre>
-                                <code class="lang-php">composer  require zgldh/qiniu-laravel-storage
-                                </code>
-                            </pre>
-                            <p>然后在  <code>config/app.php</code> 中注册服务提供者：</p>
-                            <pre>
-                                <code class="lang-php">zgldh\QiniuStorage\QiniuFilesystemServiceProvider::class
-                                </code>
-                            </pre>
-                            <p>接下来在  <code>config/filesystems.php</code> 里的disks中新增七牛配置：</p>
-                            <pre>
-                                <code class="lang-php">&#39;qiniu&#39; =&gt; [
-                                    &#39;driver&#39;  =&gt; &#39;qiniu&#39;,
-                                    &#39;domains&#39; =&gt; [
-                                        &#39;default&#39;   =&gt; &#39;xxxxx&#39;, //你的七牛域名
-                                        &#39;https&#39;     =&gt; &#39;xxxxx&#39;,         //你的HTTPS域名
-                                        &#39;custom&#39;    =&gt; &#39;xxxxx&#39;,     //你的自定义域名
-                                     ],
-                                    &#39;access_key&#39;=&gt; &#39;&#39;,  //AccessKey
-                                    &#39;secret_key&#39;=&gt; &#39;&#39;,  //SecretKey
-                                    &#39;bucket&#39;    =&gt; &#39;&#39;,  //Bucket名字
-                                    &#39;notify_url&#39;=&gt; &#39;&#39;,  //持久化处理回调地址
-                                ],
-                                </code>
-                            </pre>
-                            <p>OK，扩展包的安装就暂时介绍到这里，接下来我们要去七牛注册一个账号并且将上面的配置完善。</p>
-                            <h2 id="h2-u4E03u725Bu8D26u53F7u6CE8u518Cu53CAu914Du7F6E"><a name="七牛账号注册及配置" class="reference-link"></a><span class="header-link octicon octicon-link"></span>七牛账号注册及配置</h2><p>先去七牛注册一个账号，点击官网的注册会让我们选择用户类型，这里我就选择个人用户。</p>
-                            <p><img src="picture/31f65056c3a0ef0675d674765244c1b4.jpg" alt=""></p>
-                            <p>接下来按照流程来进项注册就OK了，我就不演示给大家看了。由于我的手机号已经注册了，这里只能给大家看一下我已经添加了存储对象的实例了。</p>
-                            <p><img src="picture/1b197cd99b6be0122d9fe387b77520f8.jpg" alt=""></p>
-                            <p><img src="picture/68bfb991d0a7c394c761b87a6a0f53fd.jpg" alt=""></p>
-                            <p>OK ，简单的用图给大家看一下七牛的默认域名及自定义域名在哪里看。下面给大家看一下七牛的秘钥的位置：</p>
-                            <p><img src="picture/0a1b7f09a5617fe330369578172be74a.jpg" alt=""></p>
-                            <p>点击秘钥管理，就可与看到个人七牛的秘钥了：</p>
-                            <p><img src="picture/1959dbdbf6ccf8dfbf2a4002198c3211.jpg" alt=""></p>
-                            <h2 id="h2--laravel-"><a name="七牛在Laravel中的配置" class="reference-link"></a><span class="header-link octicon octicon-link"></span>七牛在Laravel中的配置</h2><p>上面已经介绍相关的配置在哪儿，现在我们要将这些配置在Laravel中使用：</p>
-                            <p><img src="picture/qq截图20161109172958.jpg" alt=""></p>
-                            <h2 id="h2-u4E0Au4F20u56FEu7247u5230u4E03u725B"><a name="上传图片到七牛" class="reference-link"></a><span class="header-link octicon octicon-link"></span>上传图片到七牛</h2><p>简单用一个示例来演示前端上传图片到后台后，用七牛的扩展上传图片</p>
-                            <p>先在 <code>resources\views</code> 下新建 <code>index.blade.php</code> 视图</p>
-                            <pre><code class="lang-php">&lt;!DOCTYPE html&gt;
-                            &lt;html&gt;
-                            &lt;head&gt;
-                                &lt;title&gt;上传图片&lt;/title&gt;
-                            &lt;/head&gt;
-                            &lt;body&gt;
-                                &lt;form method=&quot;post&quot; action=&quot;&quot; enctype=&quot;multipart/form-data&quot;&gt;
-                                    &lt;input type=&quot;file&quot; name=&quot;file&quot;&gt;
-                                    &lt;button type=&quot;submit&quot;&gt;上传图片&lt;/button&gt;
-                                &lt;/form&gt;
-                            &lt;/body&gt;
-                            &lt;/html&gt;
-                            </code></pre>
-                            <p>页面代码简单，没有任何样式（请原谅我偷懒），新建 <code>UplaodController</code> 上传文件控制器：</p>
-                            <pre><code>php artisan make:controller UploadController
-                            </code></pre><p>实现上传方法：</p>
-                            <pre><code>&lt;?php
-                            namespace App\Http\Controllers;
-                            use Illuminate\Http\Request;
-                            use zgldh\QiniuStorage\QiniuStorage;
-                            class UploadController extends Controller
-                            {
-                                /**
-                                 * 上传文件到七牛
-                                 * @author 晚黎
-                                 * @date   2016-11-09T16:58:37+0800
-                                 * @param  Request                  $request [description]
-                                 * @return [type]                            [description]
-                                 */
-                                public function uploadFile(Request $request)
-                                {
-                                    // 判断是否有文件上传
-                                    if ($request-&gt;hasFile(&#39;file&#39;)) {
-                                        // 获取文件,file对应的是前端表单上传input的name
-                                        $file = $request-&gt;file(&#39;file&#39;);
-                                        // Laravel5.3中多了一个写法
-                                        // $file = $request-&gt;file;
-
-                                        // 初始化
-                                        $disk = QiniuStorage::disk(&#39;qiniu&#39;);
-                                        // 重命名文件
-                                        $fileName = md5($file-&gt;getClientOriginalName().time().rand()).&#39;.&#39;.$file-&gt;getClientOriginalExtension();
-
-                                        // 上传到七牛
-                                        $bool = $disk-&gt;put(&#39;iwanli/image_&#39;.$fileName,file_get_contents($file-&gt;getRealPath()));
-                                        // 判断是否上传成功
-                                        if ($bool) {
-                                            $path = $disk-&gt;downloadUrl(&#39;iwanli/image_&#39;.$fileName);
-                                            return &#39;上传成功，图片url:&#39;.$path;
-                                        }
-                                        return &#39;上传失败&#39;;
-                                    }
-                                    return &#39;没有文件&#39;;
-                                }
-                            }
-                            </code></pre><p>添加路由：</p>
-                            <pre><code class="lang-php">// 上传页面视图
-                            Route::get(&#39;/upload&#39;,function ()
-                            {
-                                return view(&#39;index&#39;);
-                            });
-
-                            // form提交到控制器路由
-                            Route::post(&#39;upload&#39;,&#39;UploadController@uploadFile&#39;);
-                            </code></pre>
-                            <p>视图页面(resources\views\index.blade.php):</p>
-                            <pre><code>&lt;!DOCTYPE html&gt;
-                            &lt;html&gt;
-                            &lt;head&gt;
-                                &lt;title&gt;上传图片&lt;/title&gt;
-                            &lt;/head&gt;
-                            &lt;body&gt;
-                                &lt;form method=&quot;post&quot; action=&quot;{{url(&#39;upload&#39;)}}&quot; enctype=&quot;multipart/form-data&quot;&gt;
-                                    {{csrf_field()}}
-                                    &lt;input type=&quot;file&quot; name=&quot;file&quot;&gt;
-                                    &lt;button type=&quot;submit&quot;&gt;上传图片&lt;/button&gt;
-                                &lt;/form&gt;
-                            &lt;/body&gt;
-                            &lt;/html&gt;
-                            </code></pre><p>OK，刷新页面就能看到上传后的url地址了。这里只是演示一个最简单的实例，路由定义、视图样式、及逻辑层处理大家按照自己的项目来就行了，Enjoy it。</p>
-                            <p>源码地址：<a href="https://github.com/lanceWan/laraqiniu-demo">https://github.com/lanceWan/laraqiniu-demo</a></p>   
+                            {$article.content}
+                             </think:article>
                         </div>
                         <!-- End Blog Grid Content -->
                         <div class="divider-v1">
                             <div class="divider-v1-element">
-                                <i class="divider-v1-icon fa fa-skyatlas"></i>
+                                <i class="divider-v1-icon glyphicon glyphicon-road"></i>
                             </div>
                         </div>
                         <!-- Blog Comment -->
@@ -186,14 +70,14 @@
                     <div class="blog-sidebar margin-b-30">
                         <div class="blog-sidebar-content scrollbar">
                             <h3 class="portfolio-item-subitem-title">Published</h3>
-                            <p class="portfolio-item-subitem-paragraph">2016-11-08 13:00:39</p>
+                            <p class="portfolio-item-subitem-paragraph">{$data.create_time|time_format=###,'Y-m-d H:i'}</p>
                             <hr>
                             <h3 class="portfolio-item-subitem-title">Categories</h3>
-                            <a class="portfolio-item-category" href="http://www.iwanli.me/cate/57">前端</a>
+                            <a class="portfolio-item-category" href="{:U('Cate/index',array('category'=>$Categories['name']))}">{$Categories.title}</a>
                             <hr>
                             <h3 class="portfolio-item-subitem-title">Tags</h3>
                             <ul class="list-unstyled tags-v2 margin-b-20">
-                                <li><a href="http://www.iwanli.me/tag/1">Laravel</a></li>
+                                <li><a href="{:U('Cate/index',array('category'=>$Categories['name']))}">{$Categories.keywords}</a></li>
                             </ul>
                             <hr>
                             <h3 class="portfolio-item-subitem-title">Share</h3>

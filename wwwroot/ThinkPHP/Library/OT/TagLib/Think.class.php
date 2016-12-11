@@ -186,15 +186,17 @@ class Think extends TagLib{
         $parseStr .= "<?php endif;?>";
         return $parseStr;
     }
-     //联表查询document文档基础表和document_article文章扩展表的文章的所有信息
+     //联表查询document文档基础表
+    //document_article文章扩展表的文章的所有信息/eecn_document_download扩展下载表的所有信息
     public function _article($tag,$content){
-        $result      =  !empty($tag['result'])?$tag['result']:'article';
-        $name	=	!empty($tag['name'])?$tag['name']:'Article';
+        $id = $tag['id'] ? $tag['id'] : I('get.id');
+        $result      =  !empty($tag['result'])?$tag['result']:'article';   //返回数组变量名
+        $name	=	!empty($tag['name'])?$tag['name']:'Article';  //表名
         $order   =  empty($tag['order'])?'level desc,create_time desc':$tag['order'];
         $field  =   empty($tag['field'])?'*':$tag['field'];
         $join   =   'INNER JOIN __DOCUMENT_'.strtoupper($name).'__ ON __DOCUMENT.id = __DOCUMENT_'.strtoupper($name).'__.id';
-        if(!empty($tag['id'])) { // 获取单个数据
-            return $this->_data(array('name'=>"Document", 'where'=>'status=1 AND __DOCUMENT.id='.$tag['id'], 'field'=>$field,'result'=>$result,'order'=>$order,'join'=>$join),$content);
+        if(!empty($id)) { // 获取单个数据
+            return $this->_data(array('name'=>"Document", 'where'=>'status=1 AND __DOCUMENT.id='.$id, 'field'=>$field,'result'=>$result,'order'=>$order,'join'=>$join),$content);
         }else{ // 获取数据集
             $where = 'status=1 ';
             
