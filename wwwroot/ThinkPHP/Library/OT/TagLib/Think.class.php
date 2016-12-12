@@ -196,7 +196,13 @@ class Think extends TagLib{
         $field  =   empty($tag['field'])?'*':$tag['field'];
         $join   =   'INNER JOIN __DOCUMENT_'.strtoupper($name).'__ ON __DOCUMENT.id = __DOCUMENT_'.strtoupper($name).'__.id';
         if(!empty($id)) { // 获取单个数据
-            return $this->_data(array('name'=>"Document", 'where'=>'status=1 AND __DOCUMENT.id='.$id, 'field'=>$field,'result'=>$result,'order'=>$order,'join'=>$join),$content);
+            //这里把where条件做了个判断，如果id没有传值 就是默认取get.id就直接是个数字，而如果id传值是个数组形式,如$data['id'],这时候自 定义标签会把传过来的数组表达式当字符串处理，所以这里要自己处理下
+            if( is_numeric($id) ){    
+                $where='status=1 AND __DOCUMENT.id='.$id;                   //默认I('get.id')取值
+            }else{
+                $where ='status=1 AND __DOCUMENT.id=".'.$id.'."';        //自定义处理数组形式
+            }           
+            return $this->_data(array('name'=>"Document",'where'=>$where, 'field'=>$field,'result'=>$result,'order'=>$order,'join'=>$join),$content);
         }else{ // 获取数据集
             $where = 'status=1 ';
             

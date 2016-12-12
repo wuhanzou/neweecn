@@ -109,11 +109,12 @@ var App = function() {
         });
     }
 
-    // Handle Search Fullscreen
+    // Handle search style full screen and function
     var handleSearchFullscreen = function() {
         var overlay = $('.search-fullscreen-bg-overlay'),
             close = $('.search-fullscreen-close'),
             trigger = $('.search-fullscreen-trigger'),
+            searchInput = $('.form-control'),
             SearchFullscreen = $('.search-fullscreen-overlay');
 
         trigger.on('click', function() {
