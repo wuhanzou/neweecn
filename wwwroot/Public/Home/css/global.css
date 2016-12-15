@@ -3006,6 +3006,12 @@ a:focus {
         color: #34343c; }
       .search-fullscreen .search-fullscreen-input-group .search-fullscreen-input:focus::-webkit-input-placeholder {
         color: #34343c; }
+      .search-fullscreen .search-fullscreen-input-group .search-group{
+        height: 0px;
+      }
+      .search-fullscreen .search-fullscreen-input-group .search-group li{
+        line-height: 24px;
+      }
     .search-fullscreen .search-fullscreen-input-group .search-fullscreen-search {
       position: absolute;
       top: -20px;

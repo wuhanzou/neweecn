@@ -114,12 +114,55 @@ var App = function() {
         var overlay = $('.search-fullscreen-bg-overlay'),
             close = $('.search-fullscreen-close'),
             trigger = $('.search-fullscreen-trigger'),
-            searchInput = $('.form-control'),
             SearchFullscreen = $('.search-fullscreen-overlay');
 
         trigger.on('click', function() {
             SearchFullscreen.removeClass('search-fullscreen-overlay-show');
             SearchFullscreen.addClass('search-fullscreen-overlay-show');
+            var url = Think['APP'];    //利用tp框架模板里面默认加载的var.html模板里面定义的全局js得到当前的请求地址  
+            //搜索框输入查询
+            $('.form-control ').keyup(function() {
+
+                if( $(this).val() != "" && $(this).val() != null ){
+                    var request = $.ajax({ 
+                      url: url + '/Home/Home/searchs.html&random='+Math.random(),
+                      type: "POST",
+                      data: { 'name' : $(this).val()},
+                      dataType: "json"
+                    });
+                     //请求成功 
+                    request.done(function(msg) {
+                        if( msg != null ){
+                            $('.search-group > li').remove();
+                            var song = '';
+                            $.each(msg,function(key, value){      //循环json对象
+                                song += '<li class="list-group-item">'+value['title']+'</li>';
+                            })
+                            $('.search-group').css({"height":"auto","cursor":"pointer"}).append(song);    //动态添加元素
+                            $(document).on('click', '.search-group  li', function(){      //绑定事件
+                                $('.form-control').val($(this).text());
+                            });
+                        }
+                    });
+                    //检测是否敲击回车键
+                    if( $(this).val() != "" && $(this).val() != null ){
+                        $(document).keypress(function(event){  
+                            var keycode = (event.keyCode ? event.keyCode : event.which);  
+                            if(keycode == '13'){ 
+                                location.href = url + '/Home/Home/searchUrl/name/'+$('.form-control').val()+'.html';                                    
+                            }  
+                        });  
+                    }
+                    
+                     //请求失败
+                    request.fail(function(jqXHR, textStatus) {
+                      alert("网络连接失败");
+                    });
+                }else{
+                    $('.search-group > li').remove();
+                }
+                  
+            });
         });
 
         close.on('click', function(e) {
