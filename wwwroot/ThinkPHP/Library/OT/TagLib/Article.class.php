@@ -76,13 +76,18 @@ class Article extends TagLib{
     * 列表数据分页 
     * @param  number  $cate   $cate=category_id分类id,这里不需要指定type类型
     * @param  number $listrow  每页显示条数
+    * setConfig 设置显示值和显示内容
+    * showFront 自定义了一个控制器用于前端分页的样式修改
     */
     public function _page($tag){
         $cate    = $tag['cate'];
         $listrow = $tag['listrow'];
         $parse   = '<?php ';
         $parse  .= '$__PAGE__ = new \Think\Page(get_list_count(' . $cate . '), ' . $listrow . ');';
-        $parse  .= 'echo $__PAGE__->show();';
+        $parse  .= ' $__PAGE__->setConfig("prev","Prev");';
+        $parse  .= ' $__PAGE__->setConfig("next","Next");';
+        $parse  .= ' $__PAGE__->setConfig("theme","%UP_PAGE%  %LINK_PAGE% %DOWN_PAGE%");';
+        $parse  .= 'echo $__PAGE__->showFront();';
         $parse  .= ' ?>';
         return $parse;
     }

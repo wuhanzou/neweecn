@@ -20,8 +20,9 @@ class ArticleController extends HomeController {
          /* 当前文档信息 */
          $map['id'] = I('get.id');
          $map['status']  = array('GT', 0);
-        $data = M('document') ->field(true)->where($map)->find();   //当前文档信息
+        $data = M('Document') ->field(true)->where($map)->find();   //当前文档信息
         if($data){
+            M('Document') ->where('id='.$map['id'])->setInc('view',1); // 文章阅读数加1
             $category = get_parent_category( $data['category_id'] );
             $Categories =  end($category);  
             $this-> assign('Categories', $Categories); //获取最后一个元素，赋值当前文章的上级目录
